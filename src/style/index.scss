@@ -1,0 +1,50 @@
+@import "./transition";
+@import "./element-plus";
+@import "./dark";
+
+/* 自定义全局 CssVar */
+:root {
+  /* 左侧菜单展开、收起动画时长 */
+  --pure-transition-duration: 0.3s;
+}
+
+/* 灰色模式 */
+.html-grey {
+  filter: grayscale(100%);
+}
+
+/* 色弱模式 */
+.html-weakness {
+  filter: invert(80%);
+}
+
+/* 鼠标移动信息弹窗 by xdp */
+.infobox {
+  position: fixed;
+  z-index: 9999;
+  display: none;
+  width: 250px;
+  height: auto;
+  padding: 10px;
+  font-size: 14px;
+  color: #fff;
+  background: linear-gradient(
+    180deg,
+    rgb(13 54 110 / 80%) 0%,
+    rgb(13 54 110 / 95%) 100%
+  );
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px rgb(0 0 0 / 30%);
+
+  .t-name {
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    border-bottom: 1px solid #fff;
+  }
+
+  .t-block {
+    line-height: 23px;
+  }
+}
