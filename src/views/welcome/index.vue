@@ -35,8 +35,6 @@
   </div>
 </template>
 <script setup lang="ts">
-// import { storageLocal } from "@pureadmin/utils";
-// import { router } from "@/router";
 import Menu from "./menu/menu.vue";
 import Tool from "./tool/tool.vue";
 import { VcReadyObject } from "vue-cesium/es/utils/types";
