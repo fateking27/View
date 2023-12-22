@@ -28,7 +28,7 @@
                 <!-- Indiana -->
                 <el-image
                   style="width: 100px; height: 100px"
-                  src="http://localhost/maps/13Image/13/6675/3577/tile.png"
+                  src="http://localhost/maps/13Vector/13/6670/3572/tile.png"
                 />
               </td>
               <td class="border">
@@ -49,7 +49,7 @@
               <td class="border">
                 <el-image
                   style="width: 100px; height: 100px"
-                  src="http://localhost/maps/13Image/13/6675/3577/tile.png"
+                  src="http://120.31.136.179:8080/geoserver/gwc/service/wmts?layer=zc%3Ayangli&style=&tilematrixset=EPSG%3A3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix=EPSG%3A3857%3A18&TileCol=214190&TileRow=114139"
                 />
               </td>
               <td class="border">影像底图</td>
@@ -57,9 +57,9 @@
                 <!-- Indiana -->
 
                 <el-link
-                  href="https://map.tianditu.gov.cn/2020/"
+                  href="http://120.31.136.179:8080/geoserver/gwc/demo/zc:test21?gridSet=EPSG:3857&format=image/png"
                   target="_blank"
-                  >https://map.tianditu.gov.cn/2020/</el-link
+                  >http://120.31.136.179:8080/geoserver/gwc/demo/zc:yangli?gridSet=EPSG:3857&format=image/png</el-link
                 >
               </td>
               <td class="border">
