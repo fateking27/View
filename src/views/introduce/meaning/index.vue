@@ -4,12 +4,10 @@
       <el-header class="flex justify-start items-center">
         <el-text>当前位置：</el-text>
         <el-breadcrumb>
-          <el-breadcrumb-item :to="{ path: '/new' }"
-            >新闻动态</el-breadcrumb-item
+          <el-breadcrumb-item :to="{ path: '/introduce' }"
+            >门户及项目介绍</el-breadcrumb-item
           >
-          <el-breadcrumb-item :to="{ path: '/dynamic' }"
-            >工作动态</el-breadcrumb-item
-          >
+          <el-breadcrumb-item>建设意义</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
       <el-main>
@@ -17,14 +15,18 @@
           class="bg-white container mx-auto"
           style="width: 1200px; min-height: 800px"
         >
-          <h1 class="text-center">{{ newsData.data.name }}</h1>
+          <h1 class="text-center" v-for="(item, index) of meaning" :key="index">
+            {{ item.title }}
+          </h1>
           <el-container class="mt-10 mb-2">
             <el-text style="margin-left: 150px">发布日期：</el-text>
-            <el-text>{{
-              moment(newsData.data.releaseTime).format("YYYY-MM-DD")
+            <el-text v-for="(item, index) of meaning" :key="index">{{
+              moment(item.releaseTime).format("YYYY-MM-DD")
             }}</el-text>
             <el-text style="margin-left: 20px">来源：</el-text>
-            <el-text>{{ newsData.data.source }}</el-text>
+            <el-text v-for="(item, index) of meaning" :key="index">{{
+              item.source
+            }}</el-text>
             <el-text style="margin-left: 550px">A字体</el-text>
             <div class="ml-5">
               <el-button size="small" @click="handleClickLarge">大</el-button>
@@ -35,11 +37,13 @@
           <hr class="mx-24 mb-6" />
           <el-container class="justify-center">
             <el-text
-              :style="{ fontSize: newSize.fontSize }"
               style="width: 1000px; height: auto"
               class="indent-7"
+              v-for="(item, index) of meaning"
+              :key="index"
+              :style="{ fontSize: newSize.fontSize }"
             >
-              {{ newsData.data.content }}
+              {{ item.content }}
             </el-text>
           </el-container>
         </div>
@@ -49,19 +53,37 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive } from "vue";
-import { useRoute } from "vue-router";
-import { getNew, getBrowse } from "@/api/new";
+import { onMounted, reactive, ref } from "vue";
+import { listIntroduce } from "@/api/new";
 import moment from "moment";
 
-const route = useRoute();
 defineOptions({
-  name: "Information"
+  name: "Detail"
 });
 
-const newsData = reactive({
+const dataList = reactive({
   data: []
 });
+
+const loading = ref(true);
+
+const form = reactive({
+  releaseStatus: "1"
+});
+
+async function showNews() {
+  loading.value = true;
+  const { rows } = await listIntroduce(form);
+  dataList.data = rows;
+  meaning.value = classifyNews("建设意义");
+  loading.value = false;
+  console.log(meaning);
+}
+const meaning = ref([]);
+
+const classifyNews = newType => {
+  return dataList.data.filter(news => news.type === newType);
+};
 
 const newSize = reactive({
   data: [],
@@ -81,11 +103,6 @@ const handleClickSmall = () => {
 };
 
 onMounted(async () => {
-  const newsId = route.params.id;
-  const response = await getNew(newsId);
-  // await axios.get('/business/news_info/ditail/{newsId}',)
-  await getBrowse(newsId);
-  newsData.data = response.data;
-  console.log(newsData);
+  await showNews();
 });
 </script>

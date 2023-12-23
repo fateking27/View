@@ -15,20 +15,35 @@
           class="bg-white container mx-auto"
           style="width: 1200px; min-height: 800px"
         >
-          <h1 class="text-center">{{ dataList.data.name }}</h1>
+          <h1 class="text-center" v-for="(item, index) of source" :key="index">
+            {{ item.title }}
+          </h1>
           <el-container class="mt-10 mb-2">
             <el-text style="margin-left: 150px">发布日期：</el-text>
-            <el-text>{{
-              moment(dataList.data.releaseTime).format("YYYY-MM-DD")
+            <el-text v-for="(item, index) of source" :key="index">{{
+              moment(item.releaseTime).format("YYYY-MM-DD")
             }}</el-text>
             <el-text style="margin-left: 20px">来源：</el-text>
-            <el-text>本网</el-text>
-            <el-text style="margin-left: 600px">A字体</el-text>
+            <el-text v-for="(item, index) of source" :key="index">{{
+              item.source
+            }}</el-text>
+            <el-text style="margin-left: 550px">A字体</el-text>
+            <div class="ml-5">
+              <el-button size="small" @click="handleClickLarge">大</el-button>
+              <el-button size="small" @click="handleClickMedium">中</el-button>
+              <el-button size="small" @click="handleClickSmall">小</el-button>
+            </div>
           </el-container>
           <hr class="mx-24 mb-6" />
           <el-container class="justify-center">
-            <el-text style="width: 1000px; height: auto" class="indent-7">
-              {{ dataList.data.content }}
+            <el-text
+              style="width: 1000px; height: auto"
+              class="indent-7"
+              v-for="(item, index) of source"
+              :key="index"
+              :style="{ fontSize: newSize.fontSize }"
+            >
+              {{ item.content }}
             </el-text>
           </el-container>
         </div>
@@ -52,12 +67,40 @@ const dataList = reactive({
 
 const loading = ref(true);
 
+const form = reactive({
+  releaseStatus: "1"
+});
+
 async function showNews() {
   loading.value = true;
-  const { rows } = await listIntroduce();
+  const { rows } = await listIntroduce(form);
   dataList.data = rows;
-  console.log(dataList);
+  source.value = classifyNews("项目来源");
+  loading.value = false;
+  console.log(source);
 }
+const source = ref([]);
+
+const classifyNews = newType => {
+  return dataList.data.filter(news => news.type === newType);
+};
+
+const newSize = reactive({
+  data: [],
+  fontSize: "16px" // 默认字体大小
+});
+
+const handleClickLarge = () => {
+  newSize.fontSize = "24px";
+};
+
+const handleClickMedium = () => {
+  newSize.fontSize = "18px";
+};
+
+const handleClickSmall = () => {
+  newSize.fontSize = "14px";
+};
 
 onMounted(async () => {
   await showNews();

@@ -24,12 +24,9 @@
 <style scoped>
 .footer {
   width: 100%;
-  background-color: #1064b2;
-  background-image: url("/src/assets/images/news/footer-bg.png");
+  background-image: url("/src/assets/images/news/footer.png");
   background-repeat: no-repeat;
-  background-position: right;
-  background-size: 600px;
-  background-blend-mode: lighten;
+  background-size: cover;
 }
 
 .links a {

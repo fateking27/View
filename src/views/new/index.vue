@@ -1,12 +1,12 @@
 <template>
   <div class="flex flex-col items-center">
     <div class="bg-image bg-[url('/src/assets/images/news/new-bg.png')]">
-      <div class="mt-20">
-        <div class="mb-10 flex flex-row mt-20">
+      <div class="mt-10">
+        <div class="mb-10 flex flex-row mt-10">
           <el-image src="/src/assets/images/title/arrow-left.png" />
           <div class="text-3xl ml-2" style="position: relative; width: 90%">
             <text class="ml-10 mt-4 big-title" style="position: absolute"
-              >WORD DYNAMICS</text
+              >WORK DYNAMICS</text
             >
             <router-link to="/dynamic" style="position: absolute"
               >工作动态</router-link
@@ -45,7 +45,9 @@
                     class="mr-8 mb-1 bg-red-200 text-red-400 text-center p-1 text-xs"
                     >{{ item.mark }}</span
                   >
-                  <span>{{ moment(item.releaseTime).format("MM-DD") }}</span>
+                  <span>{{
+                    moment(item.releaseTime).format("YYYY-MM-DD")
+                  }}</span>
                 </div>
               </li>
             </ul>
@@ -93,7 +95,9 @@
                     class="mr-8 mb-1 bg-red-200 text-red-400 text-center p-1 text-xs"
                     >{{ item.mark }}</span
                   >
-                  <span>{{ moment(item.releaseTime).format("MM-DD") }}</span>
+                  <span>{{
+                    moment(item.releaseTime).format("YYYY-MM-DD")
+                  }}</span>
                 </div>
               </li>
             </ul>
@@ -104,7 +108,7 @@
 
     <div class="bg-[url('/src/assets/images/news/progress-bg.png')] bg-image">
       <div class="my-20">
-        <div class="mb-10 flex flex-row mt-20">
+        <div class="mb-10 flex flex-row mt-10">
           <el-image src="/src/assets/images/title/arrow-left.png" />
           <div class="text-3xl ml-2" style="position: relative; width: 90%">
             <text class="ml-10 mt-4 big-title" style="position: absolute"
@@ -133,7 +137,9 @@
                     class="mr-8 mb-1 bg-red-200 text-red-400 text-center p-1 text-xs"
                     >{{ item.mark }}</span
                   >
-                  <span>{{ moment(item.releaseTime).format("MM-DD") }} </span>
+                  <span
+                    >{{ moment(item.releaseTime).format("YYYY-MM-DD") }}
+                  </span>
                 </div>
               </li>
             </ul>
@@ -173,6 +179,8 @@ async function showNews() {
   dataList.data = rows;
   workNews.value = classifyNews("工作动态");
   progressNews.value = classifyNews("进展成效");
+  console.log(dataList);
+  console.log(workNews);
 }
 
 const classifyNews = newType => {

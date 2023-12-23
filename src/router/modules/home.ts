@@ -75,8 +75,8 @@ export default {
       }
     },
     {
-      path: "/project",
-      name: "Project",
+      path: "/progress",
+      name: "Progress",
       component: () => import("@/views/new/progress/index.vue"),
       meta: {
         title: "进展成效",
@@ -89,6 +89,33 @@ export default {
       component: () => import("@/views/introduce/detail/index.vue"),
       meta: {
         title: "项目介绍",
+        showLink: false
+      }
+    },
+    {
+      path: "/meaning",
+      name: "Meaning",
+      component: () => import("@/views/introduce/meaning/index.vue"),
+      meta: {
+        title: "建设意义",
+        showLink: false
+      }
+    },
+    {
+      path: "/expectation",
+      name: "Expectation",
+      component: () => import("@/views/introduce/expectation/index.vue"),
+      meta: {
+        title: "预期成果",
+        showLink: false
+      }
+    },
+    {
+      path: "/fix",
+      name: "Fix",
+      component: () => import("@/views/results/fix/index.vue"),
+      meta: {
+        title: "预期成果",
         showLink: false
       }
     }

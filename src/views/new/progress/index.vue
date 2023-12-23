@@ -1,30 +1,45 @@
 <template>
   <div class="flex flex-col items-center">
-    <div class="mt-20">
-      <div class="mb-10 flex flex-row mt-20">
-        <el-image src="/src/assets/images/title/arrow-left.png" />
-        <div class="text-3xl ml-2" style="position: relative; width: 90%">
-          <text class="ml-10 mt-4 big-title" style="position: absolute"
-            >PROGRESSANDEFFECTIVENESS</text
+    <el-container>
+      <el-header class="flex justify-start items-center">
+        <el-text>当前位置：</el-text>
+        <el-breadcrumb>
+          <el-breadcrumb-item :to="{ path: '/new' }"
+            >新闻动态</el-breadcrumb-item
           >
-          <div style="position: absolute">进展成效</div>
+          <el-breadcrumb-item :to="{ path: '/progress' }"
+            >进展成效</el-breadcrumb-item
+          >
+        </el-breadcrumb>
+      </el-header>
+      <el-main style="min-width: 900px">
+        <div class="mt-5">
+          <div class="mb-10 flex flex-row mt-5">
+            <el-image src="/src/assets/images/title/arrow-left.png" />
+            <div class="text-3xl ml-2" style="position: relative; width: 90%">
+              <text class="ml-10 mt-4 big-title" style="position: absolute"
+                >PROGRESSANDEFFECTIVENESS</text
+              >
+              <div style="position: absolute">进展成效</div>
+            </div>
+          </div>
+          <ul class="mb-20">
+            <li
+              v-for="(item, index) of progressNews"
+              :key="index"
+              class="flex justify-between"
+            >
+              <router-link
+                :to="{ name: 'Information', params: { id: item.id } }"
+                class="mr-20 mb-2 newsTitle"
+                >{{ item.name }}</router-link
+              >
+              <span>{{ moment(item.releaseTime).format("YYYY-MM-DD") }}</span>
+            </li>
+          </ul>
         </div>
-      </div>
-      <ul class="mb-20">
-        <li
-          v-for="(item, index) of progressNews"
-          :key="index"
-          class="flex justify-between"
-        >
-          <router-link
-            :to="{ name: 'Information', params: { id: item.id } }"
-            class="mr-12 mb-2 newsTitle"
-            >{{ item.name }}</router-link
-          >
-          <span>{{ moment(item.releaseTime).format("MM-DD") }}</span>
-        </li>
-      </ul>
-    </div>
+      </el-main>
+    </el-container>
   </div>
 </template>
 

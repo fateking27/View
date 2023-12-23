@@ -1,30 +1,45 @@
 <template>
   <div class="flex flex-col items-center">
-    <div class="mt-20">
-      <div class="mb-10 flex flex-row mt-20">
-        <el-image src="/src/assets/images/title/arrow-left.png" />
-        <div class="text-3xl ml-2" style="position: relative; width: 90%">
-          <text class="ml-10 mt-4 big-title" style="position: absolute"
-            >WORD DYNAMICS</text
+    <el-container>
+      <el-header class="flex justify-start items-center">
+        <el-text>当前位置：</el-text>
+        <el-breadcrumb>
+          <el-breadcrumb-item :to="{ path: '/new' }"
+            >新闻动态</el-breadcrumb-item
           >
-          <div style="position: absolute">工作动态</div>
+          <el-breadcrumb-item :to="{ path: '/dynamic' }"
+            >工作动态</el-breadcrumb-item
+          >
+        </el-breadcrumb>
+      </el-header>
+      <el-main>
+        <div class="mt-5">
+          <div class="mb-10 flex flex-row mt-5">
+            <el-image src="/src/assets/images/title/arrow-left.png" />
+            <div class="text-3xl ml-2" style="position: relative; width: 90%">
+              <text class="ml-10 mt-4 big-title" style="position: absolute"
+                >WORK DYNAMICS</text
+              >
+              <div style="position: absolute">工作动态</div>
+            </div>
+          </div>
+          <ul class="mb-20">
+            <li
+              v-for="(item, index) of workNews"
+              :key="index"
+              class="flex justify-between"
+            >
+              <router-link
+                :to="{ name: 'Information', params: { id: item.id } }"
+                class="mr-12 mb-2 newsTitle"
+                >{{ item.name }}</router-link
+              >
+              <span>{{ moment(item.releaseTime).format("YYYY-MM-DD") }}</span>
+            </li>
+          </ul>
         </div>
-      </div>
-      <ul class="mb-20">
-        <li
-          v-for="(item, index) of workNews"
-          :key="index"
-          class="flex justify-between"
-        >
-          <router-link
-            :to="{ name: 'Information', params: { id: item.id } }"
-            class="mr-12 mb-2 newsTitle"
-            >{{ item.name }}</router-link
-          >
-          <span>{{ moment(item.releaseTime).format("MM-DD") }}</span>
-        </li>
-      </ul>
-    </div>
+      </el-main>
+    </el-container>
   </div>
 </template>
 

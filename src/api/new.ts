@@ -11,6 +11,10 @@ export const getNew = id => {
   return http.request<Result>("get", `/business/news_info/${id}`);
 };
 
+export const getBrowse = id => {
+  return http.request<Result>("get", `/business/news_info/ditail/${id}`);
+};
+
 /**查询项目介绍**/
 export const listIntroduce = (data?: object) => {
   return http.request<Result>("get", "business/project_intro/released", {
