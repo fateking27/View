@@ -66,6 +66,15 @@ export default {
       }
     },
     {
+      path: "/mapService",
+      name: "MapService",
+      component: () => import("@/views/service/mapServices/index.vue"),
+      meta: {
+        title: "地图服务",
+        showLink: false
+      }
+    },
+    {
       path: "/dynamic",
       name: "Dynamic",
       component: () => import("@/views/new/dynamic/index.vue"),
