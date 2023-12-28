@@ -13,34 +13,35 @@
         </el-breadcrumb>
       </el-header>
       <el-main>
-        <div
-          class="bg-white container mx-auto"
-          style="width: 1200px; min-height: 800px"
-        >
+        <div class="bg-white container mx-auto p-10" style="min-height: 800px">
           <h1 class="text-center">{{ newsData.data.name }}</h1>
-          <el-container class="mt-10 mb-2">
-            <el-text style="margin-left: 150px">发布日期：</el-text>
+          <el-container class="mt-8 mb-2">
+            <el-text style="margin-left: 100px">发布日期：</el-text>
             <el-text>{{
               moment(newsData.data.releaseTime).format("YYYY-MM-DD")
             }}</el-text>
             <el-text style="margin-left: 20px">来源：</el-text>
             <el-text>{{ newsData.data.source }}</el-text>
-            <el-text style="margin-left: 550px">A字体</el-text>
+            <el-text style="margin-left: 600px">A字体</el-text>
             <div class="ml-5">
               <el-button size="small" @click="handleClickLarge">大</el-button>
               <el-button size="small" @click="handleClickMedium">中</el-button>
               <el-button size="small" @click="handleClickSmall">小</el-button>
             </div>
           </el-container>
-          <hr class="mx-24 mb-6" />
+          <hr class="mx-20 mb-6" />
           <el-container class="justify-center">
-            <el-text
+            <!--            <el-text
               :style="{ fontSize: newSize.fontSize }"
               style="width: 1000px; height: auto"
               class="indent-7"
             >
               {{ newsData.data.content }}
-            </el-text>
+            </el-text>-->
+            <div
+              :style="{ fontSize: newSize.fontSize }"
+              v-html="newsData.data.content"
+            />
           </el-container>
         </div>
       </el-main>
@@ -73,17 +74,16 @@ const handleClickLarge = () => {
 };
 
 const handleClickMedium = () => {
-  newSize.fontSize = "18px";
+  newSize.fontSize = "16px";
 };
 
 const handleClickSmall = () => {
-  newSize.fontSize = "14px";
+  newSize.fontSize = "12px";
 };
 
 onMounted(async () => {
   const newsId = route.params.id;
   const response = await getNew(newsId);
-  // await axios.get('/business/news_info/ditail/{newsId}',)
   await getBrowse(newsId);
   newsData.data = response.data;
   console.log(newsData);

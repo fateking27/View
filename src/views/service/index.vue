@@ -120,4 +120,14 @@ thead {
   color: white;
   background-color: #1064b2;
 }
+
+.newsTitle {
+  padding-left: 5px;
+  border-left: 5px solid #5587eb;
+}
+
+.big-title {
+  font-size: 44px;
+  color: #ecf2ff;
+}
 </style>
