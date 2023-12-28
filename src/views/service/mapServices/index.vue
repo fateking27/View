@@ -1,20 +1,17 @@
 <template>
   <div class="flex flex-col items-center">
-    <div class="mt-20">
-      <div class="mb-10 flex flex-row mt-20">
-        <el-image src="/src/assets/images/title/arrow-left.png" />
-
-        <div class="text-3xl ml-2" style="position: relative; width: 90%">
-          <text class="ml-10 mt-4 big-title" style="position: absolute"
-            >MAPSERVICES</text
+    <!-- <div class="mt-20"> -->
+    <el-container>
+      <el-header class="flex justify-start items-center">
+        <el-text>当前位置：</el-text>
+        <el-breadcrumb>
+          <el-breadcrumb-item :to="{ path: '/service' }"
+            >对外服务</el-breadcrumb-item
           >
-          <router-link to="/mapService" style="position: absolute"
-            >地图服务</router-link
-          >
-        </div>
-      </div>
-
-      <el-container>
+          <el-breadcrumb-item>地图服务</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-header>
+      <el-main>
         <table class="mb-10" style="text-align: center">
           <thead>
             <tr>
@@ -25,17 +22,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in dataList.data.slice(0, 2)" :key="item.id">
+            <tr v-for="item in dataList.data" :key="item.id">
               <td class="border">
-                <!-- Indiana -->
                 <el-image style="width: 100px; height: 100px" :src="item.url" />
               </td>
               <td class="border">
-                <!-- Indianapolis -->
                 {{ item.title }}
               </td>
               <td class="border">
-                <!-- Indiana -->
                 <el-link :href="item.content" target="_blank">{{
                   item.content
                 }}</el-link>
@@ -44,8 +38,9 @@
             </tr>
           </tbody>
         </table>
-      </el-container>
-    </div>
+      </el-main>
+    </el-container>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -53,7 +48,7 @@
 import { onMounted, reactive } from "vue";
 import { mapServiceList } from "@/api/service";
 defineOptions({
-  name: "Service"
+  name: "mapService"
 });
 const dataList = reactive({
   data: []
@@ -86,15 +81,5 @@ td {
 thead {
   color: white;
   background-color: #1064b2;
-}
-
-.newsTitle {
-  padding-left: 5px;
-  border-left: 5px solid #5587eb;
-}
-
-.big-title {
-  font-size: 44px;
-  color: #ecf2ff;
 }
 </style>
