@@ -45,6 +45,16 @@
           </tbody>
         </table>
       </el-container>
+      <div
+        style="
+          position: absolute;
+          right: 140px;
+          bottom: -160px;
+          color: rgb(31 122 240);
+        "
+      >
+        <router-link to="/mapService">更多...</router-link>
+      </div>
     </div>
   </div>
 </template>
