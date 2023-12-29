@@ -124,7 +124,25 @@ export default {
       name: "Fix",
       component: () => import("@/views/results/fix/index.vue"),
       meta: {
-        title: "预期成果",
+        title: "修复进度",
+        showLink: false
+      }
+    },
+    {
+      path: "/current",
+      name: "Current",
+      component: () => import("@/views/results/currentResults/index.vue"),
+      meta: {
+        title: "当前成果",
+        showLink: false
+      }
+    },
+    {
+      path: "/page",
+      name: "Page",
+      component: () => import("@/views/results/page/index.vue"),
+      meta: {
+        title: "阶段展示",
         showLink: false
       }
     }

@@ -28,3 +28,35 @@ export const listResults = (data?: object) => {
     params: data
   });
 };
+
+/**查询当前成果**/
+export const listCurrent = (data?: object) => {
+  return http.request<Result>("get", "/business/project_res/list_achievement", {
+    params: data
+  });
+};
+
+/**查询阶段展示**/
+export const listPage = (data?: object) => {
+  return http.request<Result>(
+    "get",
+    "/business/project_res/list_stage_display",
+    {
+      params: data
+    }
+  );
+};
+
+/**查询修复进度**/
+export const listProgress = (data?: object) => {
+  return http.request<Result>(
+    "get",
+    "/business/project_res/list_repair_progress",
+    {
+      params: data
+    }
+  );
+};
+export const resultDetail = id => {
+  return http.request<Result>("get", `/business/project_res/ditail/${id}`);
+};

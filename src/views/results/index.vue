@@ -21,7 +21,7 @@
           </el-aside>
           <el-main class="ml-10 no-padding">
             <div class="container mx-auto">
-              <el-text v-for="(item, index) of dataList.data" :key="index">
+              <el-text v-for="(item, index) of progressList.data" :key="index">
                 {{ item.content }}
               </el-text>
             </div>
@@ -44,38 +44,40 @@
             <text class="ml-10 mt-4 big-title" style="position: absolute"
               >CURRENTRESULTS</text
             >
-            <router-link to="/" style="position: absolute"
-              >当前成果</router-link
-            >
+            <text style="position: absolute">当前成果</text>
           </div>
         </div>
         <el-container>
           <el-header>
             <el-container>
-              <el-text> 红树林/盐生态现状： </el-text>
-              <el-text>
-                生态系统稳定、红树林植被、生物群落和环境要素等方面整体稳定，可自我维持
+              <el-text>现状： </el-text>
+              <el-text v-for="(item, index) of dataList.data" :key="index">
+                {{ item.ecologicalStatus }}
               </el-text>
             </el-container>
 
             <el-container>
-              <el-text> 红树林/盐生态分级： </el-text>
-              <el-text> I级 </el-text>
+              <el-text> 分级： </el-text>
+              <el-text v-for="(item, index) of dataList.data" :key="index">
+                {{ item.rank }}
+              </el-text>
             </el-container>
 
             <el-container>
-              <el-text> 红树林/盐沼减灾功能： </el-text>
-              <el-text> 优 </el-text>
+              <el-text> 功能： </el-text>
+              <el-text v-for="(item, index) of dataList.data" :key="index">
+                {{ item.disasterReduction }}
+              </el-text>
             </el-container>
           </el-header>
           <el-main>
             <el-container style="width: 1200px; height: 300px">
-              <div class="demo-image__lazy">
-                <el-image v-for="url in urls" :key="url" :src="url" lazy />
-              </div>
-              <!--              <el-image :src="imgUrl" />-->
-              <!--              <el-image :src="imgUrl" />-->
-              <!--              <el-image :src="imgUrl" />-->
+              <!--              <div class="demo-image__lazy">-->
+              <!--                <el-image v-for="url in urls" :key="url" :src="url" lazy />-->
+              <!--              </div>-->
+              <el-image :src="imgUrl" />
+              <el-image :src="imgUrl" />
+              <el-image :src="imgUrl" />
             </el-container>
           </el-main>
         </el-container>
@@ -90,20 +92,18 @@
             <text class="ml-10 mt-4 big-title" style="position: absolute"
               >STAGEPRESENTATION</text
             >
-            <router-link to="/" style="position: absolute"
-              >阶段展示</router-link
-            >
+            <text to="/" style="position: absolute">阶段展示</text>
           </div>
         </div>
         <el-container>
           <el-aside>
             <div
-              v-for="(item, index) of stage"
+              v-for="(item, index) of pageList.data"
               :key="index"
               width="80px"
               class="mr-10 mt-10"
             >
-              <el-text class="stageFont">{{ item.title }}</el-text>
+              <router-link to="/page"> {{ item.stageName }}</router-link>
             </div>
           </el-aside>
           <el-main>
@@ -125,7 +125,7 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from "vue";
-import { listResults } from "@/api/new";
+import { listCurrent, listPage, listProgress } from "@/api/new";
 
 defineOptions({
   name: "Results"
@@ -148,9 +148,14 @@ const urls = [
   }
 ];
 
-const stage = [{ title: "阶段一二" }, { title: "阶段二" }, { title: "阶段三" }];
-
 const dataList = reactive({
+  data: []
+});
+
+const pageList = reactive({
+  data: []
+});
+const progressList = reactive({
   data: []
 });
 
@@ -162,7 +167,7 @@ const form = reactive({
 
 async function showNews() {
   loading.value = true;
-  const { rows } = await listResults(form);
+  const { rows } = await listCurrent(form);
   dataList.data = rows;
   loading.value = false;
   console.log(dataList);
@@ -174,8 +179,28 @@ async function showNews() {
 //   return dataList.data.filter((news) => news.type=== newType);
 // };
 
+async function showPage() {
+  loading.value = true;
+  const { rows } = await listPage(form);
+  pageList.data = rows;
+  loading.value = false;
+  console.log(pageList);
+  // progress.value = classifyNews("修复进度");
+}
+
+async function showProgress() {
+  loading.value = true;
+  const { rows } = await listProgress(form);
+  progressList.data = rows;
+  loading.value = false;
+  console.log(dataList);
+  // progress.value = classifyNews("修复进度");
+}
+
 onMounted(async () => {
   await showNews();
+  await showPage();
+  await showProgress();
 });
 </script>
 

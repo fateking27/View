@@ -30,7 +30,7 @@
             </div>
           </el-container>
           <hr class="mx-20 mb-6" />
-          <el-container class="justify-center">
+          <el-container class="justify-center mx-32">
             <!--            <el-text
               :style="{ fontSize: newSize.fontSize }"
               style="width: 1000px; height: auto"

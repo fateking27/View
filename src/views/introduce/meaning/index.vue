@@ -11,15 +11,12 @@
         </el-breadcrumb>
       </el-header>
       <el-main>
-        <div
-          class="bg-white container mx-auto p-10"
-          style="width: 1200px; min-height: 800px"
-        >
+        <div class="bg-white container mx-auto p-10" style="min-height: 800px">
           <h1 class="text-center" v-for="(item, index) of meaning" :key="index">
             {{ item.title }}
           </h1>
           <el-container class="mt-10 mb-2">
-            <el-text style="margin-left: 150px">发布日期：</el-text>
+            <el-text style="margin-left: 100px">发布日期：</el-text>
             <el-text v-for="(item, index) of meaning" :key="index">{{
               moment(item.releaseTime).format("YYYY-MM-DD")
             }}</el-text>
@@ -27,7 +24,7 @@
             <el-text v-for="(item, index) of meaning" :key="index">{{
               item.source
             }}</el-text>
-            <el-text style="margin-left: 550px">A字体</el-text>
+            <el-text style="margin-left: 600px">A字体</el-text>
             <div class="ml-5">
               <el-button size="small" @click="handleClickLarge">大</el-button>
               <el-button size="small" @click="handleClickMedium">中</el-button>
