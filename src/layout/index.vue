@@ -37,7 +37,6 @@ import Appmain from "./components/appMain.vue";
   z-index: 999;
   width: 100%;
   height: 100%;
-  background: #000;
   opacity: 0.3;
 }
 

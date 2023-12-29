@@ -70,9 +70,12 @@
           </el-header>
           <el-main>
             <el-container style="width: 1200px; height: 300px">
-              <el-image :src="imgUrl" />
-              <el-image :src="imgUrl" />
-              <el-image :src="imgUrl" />
+              <div class="demo-image__lazy">
+                <el-image v-for="url in urls" :key="url" :src="url" lazy />
+              </div>
+              <!--              <el-image :src="imgUrl" />-->
+              <!--              <el-image :src="imgUrl" />-->
+              <!--              <el-image :src="imgUrl" />-->
             </el-container>
           </el-main>
         </el-container>
@@ -93,19 +96,26 @@
           </div>
         </div>
         <el-container>
-          <el-aside width="80px" class="mr-10 mt-10">
-            <div v-for="(item, index) of stage" :key="index">
+          <el-aside>
+            <div
+              v-for="(item, index) of stage"
+              :key="index"
+              width="80px"
+              class="mr-10 mt-10"
+            >
               <el-text class="stageFont">{{ item.title }}</el-text>
             </div>
           </el-aside>
           <el-main>
-            <div class="block text-center" style="width: 750px; height: 500px">
-              <el-carousel>
+            <div class="block text-center" style="width: 750px; height: 700px">
+              <el-carousel width="600px" height="550px">
                 <el-carousel-item v-for="(item, index) of urls" :key="index">
-                  <el-image :src="item" />
+                  <el-image :src="item.url" />
+                  <el-text>{{ item.title }}</el-text>
                 </el-carousel-item>
               </el-carousel>
             </div>
+            <div />
           </el-main>
         </el-container>
       </div>
@@ -124,11 +134,18 @@ const imgUrl =
   "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg";
 
 const urls = [
-  "https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg",
-  "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-  "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg",
-  "https://fuss10.elemecdn.com/9/bb/e27858e973f5d7d3904835f46abbdjpeg.jpeg",
-  "https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg"
+  {
+    url: "https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg",
+    title: "阶段一"
+  },
+  {
+    url: "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
+    title: "阶段二"
+  },
+  {
+    url: "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg",
+    title: "阶段三"
+  }
 ];
 
 const stage = [{ title: "阶段一二" }, { title: "阶段二" }, { title: "阶段三" }];
@@ -181,5 +198,15 @@ onMounted(async () => {
 .stageFont {
   font-size: 20px;
   line-height: 3;
+}
+
+.newsTitle {
+  padding-left: 5px;
+  border-left: 5px solid #5587eb;
+}
+
+.big-title {
+  font-size: 44px;
+  color: #ecf2ff;
 }
 </style>

@@ -153,4 +153,14 @@ onMounted(async () => {
   background-position: center;
   background-size: cover;
 }
+
+.newsTitle {
+  padding-left: 5px;
+  border-left: 5px solid #5587eb;
+}
+
+.big-title {
+  font-size: 44px;
+  color: #ecf2ff;
+}
 </style>

@@ -12,7 +12,7 @@
       </el-header>
       <el-main>
         <div
-          class="bg-white container mx-auto"
+          class="bg-white container mx-auto p-10"
           style="width: 1200px; min-height: 800px"
         >
           <h1

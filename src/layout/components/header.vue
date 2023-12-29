@@ -1,25 +1,16 @@
 <template>
   <el-header class="header">
     <div class="logo">珠海市海洋生态修复保护项目安全保障及自动监管工程</div>
-    <el-menu class="menu" mode="horizontal" router="true" default-active="/new">
-      <el-menu-item index="/new" :class="{ 'is-active': activeMenu === '1' }"
-        >新闻信息</el-menu-item
-      >
-      <el-menu-item
-        index="/introduce"
-        :class="{ 'is-active': activeMenu === '2' }"
-        >门户及项目介绍</el-menu-item
-      >
-      <el-menu-item
-        index="/results"
-        :class="{ 'is-active': activeMenu === '3' }"
-        >成果内容展示</el-menu-item
-      >
-      <el-menu-item
-        index="/service"
-        :class="{ 'is-active': activeMenu === '4' }"
-        >对外服务</el-menu-item
-      >
+    <el-menu
+      class="menu"
+      mode="horizontal"
+      router="true"
+      :default-active="active"
+    >
+      <el-menu-item index="/new">新闻信息</el-menu-item>
+      <el-menu-item index="/introduce">门户及项目介绍</el-menu-item>
+      <el-menu-item index="/results">成果内容展示</el-menu-item>
+      <el-menu-item index="/service">对外服务</el-menu-item>
     </el-menu>
     <el-input class="search" placeholder="请输入要搜索的内容" />
     <!--    <el-button class="login-register" type="primary" round plain @click="login"-->
@@ -36,8 +27,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import { ElHeader, ElMenu, ElMenuItem, ElInput } from "element-plus";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   components: {
@@ -46,11 +38,25 @@ export default defineComponent({
     ElMenuItem,
     ElInput
   },
-  methods: {
-    login() {
-      this.$router.push("/login");
-    }
+  setup() {
+    const route = useRoute();
+    const active = ref(route.path);
+
+    watch(
+      () => route.path,
+      value => {
+        active.value = value;
+      }
+    );
+    return {
+      active
+    };
   }
+  // methods: {
+  //   login() {
+  //     this.$router.push("/login");
+  //   }
+  // }
 });
 </script>
 

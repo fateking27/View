@@ -24,7 +24,7 @@
 <style scoped>
 .footer {
   width: 100%;
-  background-image: url("/src/assets/images/news/footer.png");
+  background-image: url("/src/assets/layout/footer-bg.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
