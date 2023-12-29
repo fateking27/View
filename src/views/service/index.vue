@@ -42,6 +42,15 @@
               </td>
               <td class="border">{{ item.type }}</td>
             </tr>
+            <tr>
+              <td
+                colspan="4"
+                class="border"
+                style="color: rgb(7 116 211); border: none"
+              >
+                <router-link to="/mapService">查看更多...</router-link>
+              </td>
+            </tr>
           </tbody>
         </table>
       </el-container>
