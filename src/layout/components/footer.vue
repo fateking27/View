@@ -4,9 +4,13 @@
       <div class="links text-center mt-5">
         <a href="#">关于本网</a>
         <span class="separator">|</span>
-        <a href="#">联系我们</a>
+        <router-link to="/ContactUs">
+          <a href="">联系我们</a>
+        </router-link>
         <span class="separator">|</span>
-        <a href="#">网站声明</a>
+        <router-link to="/statement">
+          <a href="">网站声明</a>
+        </router-link>
         <span class="separator">|</span>
         <a href="#">网站纠错</a>
       </div>
