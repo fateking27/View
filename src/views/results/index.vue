@@ -17,7 +17,13 @@
         </div>
         <el-container>
           <el-aside width="450px" height="250px">
-            <el-image :src="imgUrl" :fit="fit" />
+            <el-image
+              width="450px"
+              height="250px"
+              v-for="(item, index) of progressList.data"
+              :key="index"
+              :src="item.coverMaterialUrl"
+            />
           </el-aside>
           <el-main class="ml-10 no-padding">
             <div class="container mx-auto">
@@ -103,7 +109,12 @@
               width="80px"
               class="mr-10 mt-10"
             >
-              <router-link to="/page"> {{ item.stageName }}</router-link>
+              <router-link :to="{ name: 'Page', params: { id: item.id } }">
+                {{ item.stageName }}</router-link
+              >
+              <ei-text>
+                {{ item.stageTime }}
+              </ei-text>
             </div>
           </el-aside>
           <el-main>
@@ -126,6 +137,8 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from "vue";
 import { listCurrent, listPage, listProgress } from "@/api/new";
+
+const { VITE_API_PATH } = import.meta.env;
 
 defineOptions({
   name: "Results"
@@ -170,7 +183,6 @@ async function showNews() {
   const { rows } = await listCurrent(form);
   dataList.data = rows;
   loading.value = false;
-  console.log(dataList);
   // progress.value = classifyNews("修复进度");
 }
 // const progress = ref([]);
@@ -181,20 +193,20 @@ async function showNews() {
 
 async function showPage() {
   loading.value = true;
-  const { rows } = await listPage(form);
+  const { rows } = await listPage();
   pageList.data = rows;
+  console.log(pageList.data[0].stageTime);
   loading.value = false;
-  console.log(pageList);
-  // progress.value = classifyNews("修复进度");
 }
 
 async function showProgress() {
   loading.value = true;
-  const { rows } = await listProgress(form);
+  const { rows } = await listProgress();
   progressList.data = rows;
   loading.value = false;
-  console.log(dataList);
-  // progress.value = classifyNews("修复进度");
+  progressList.data.forEach(item => {
+    item.coverMaterialUrl = `${VITE_API_PATH}/static/${item.coverMaterialUrl}`;
+  });
 }
 
 onMounted(async () => {

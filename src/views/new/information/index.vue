@@ -7,8 +7,15 @@
           <el-breadcrumb-item :to="{ path: '/new' }"
             >新闻动态</el-breadcrumb-item
           >
-          <el-breadcrumb-item :to="{ path: '/dynamic' }"
+          <el-breadcrumb-item
+            v-if="newsData.data.type === '工作动态'"
+            :to="{ path: '/dynamic' }"
             >工作动态</el-breadcrumb-item
+          >
+          <el-breadcrumb-item
+            v-if="newsData.data.type === '进展成效'"
+            :to="{ path: '/progress' }"
+            >进展成效</el-breadcrumb-item
           >
         </el-breadcrumb>
       </el-header>
@@ -52,7 +59,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive } from "vue";
 import { useRoute } from "vue-router";
-import { getNew, getBrowse } from "@/api/new";
+import { getBrowse } from "@/api/new";
 import moment from "moment";
 
 const route = useRoute();
@@ -83,8 +90,8 @@ const handleClickSmall = () => {
 
 onMounted(async () => {
   const newsId = route.params.id;
-  const response = await getNew(newsId);
-  await getBrowse(newsId);
+  const response = await getBrowse(newsId);
+  // await getBrowse(newsId);
   newsData.data = response.data;
   console.log(newsData);
 });

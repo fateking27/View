@@ -7,7 +7,7 @@
           <el-breadcrumb-item :to="{ path: '/results' }"
             >成果内容展示</el-breadcrumb-item
           >
-          <el-breadcrumb-item>项目来源</el-breadcrumb-item>
+          <el-breadcrumb-item>阶段成果</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
       <el-main>
@@ -50,7 +50,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive } from "vue";
 import { useRoute } from "vue-router";
-import { listPage, resultDetail } from "@/api/new";
+import { getPage } from "@/api/new";
 import moment from "moment";
 
 const route = useRoute();
@@ -80,10 +80,10 @@ const handleClickSmall = () => {
 };
 
 onMounted(async () => {
-  const stageName = route.params.stageName;
-  const response = await listPage(stageName);
-  await resultDetail(stageName);
+  const stageId = route.params.id;
+  const response = await getPage(stageId);
+  // await getPage(stageId);
   newsData.data = response.data;
-  console.log(newsData);
+  console.log(newsData.data);
 });
 </script>

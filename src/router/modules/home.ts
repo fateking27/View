@@ -12,7 +12,7 @@ export default {
   },
   children: [
     {
-      path: "/new",
+      path: "new",
       name: "New",
       component: () => import("@/views/new/index.vue"),
       meta: {
@@ -21,7 +21,7 @@ export default {
       }
     },
     {
-      path: "/introduce",
+      path: "introduce",
       name: "Introduce",
       component: () => import("@/views/introduce/index.vue"),
       meta: {
@@ -30,7 +30,7 @@ export default {
       }
     },
     {
-      path: "/results",
+      path: "results",
       name: "Results",
       component: () => import("@/views/results/index.vue"),
       meta: {
@@ -48,7 +48,7 @@ export default {
       }
     },
     {
-      path: "/information/:id",
+      path: "information/:id",
       name: "Information",
       component: () => import("@/views/new/information/index.vue"),
       meta: {
@@ -57,7 +57,7 @@ export default {
       }
     },
     {
-      path: "/service",
+      path: "service",
       name: "Service",
       component: () => import("@/views/service/index.vue"),
       meta: {
@@ -138,7 +138,7 @@ export default {
       }
     },
     {
-      path: "/page",
+      path: "page/:id",
       name: "Page",
       component: () => import("@/views/results/page/index.vue"),
       meta: {

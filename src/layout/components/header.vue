@@ -52,11 +52,6 @@ export default defineComponent({
       active
     };
   }
-  // methods: {
-  //   login() {
-  //     this.$router.push("/login");
-  //   }
-  // }
 });
 </script>
 
@@ -90,12 +85,6 @@ export default defineComponent({
 .search {
   width: 150px;
   margin-right: 10px;
-}
-
-.login-register {
-  margin-left: 10px;
-  color: #5587eb;
-  background-color: #f5f6f9;
 }
 
 .image-container {

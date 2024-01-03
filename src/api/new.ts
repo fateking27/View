@@ -47,6 +47,10 @@ export const listPage = (data?: object) => {
   );
 };
 
+export const getPage = id => {
+  return http.request<Result>("get", `/business/project_res/ditail/${id}`);
+};
+
 /**查询修复进度**/
 export const listProgress = (data?: object) => {
   return http.request<Result>(
@@ -57,6 +61,6 @@ export const listProgress = (data?: object) => {
     }
   );
 };
-export const resultDetail = id => {
-  return http.request<Result>("get", `/business/project_res/ditail/${id}`);
+export const getIntro = id => {
+  return http.request<Result>("get", `/business/project_intro/ditail/${id}`);
 };

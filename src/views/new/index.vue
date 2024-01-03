@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center">
     <div class="bg-image bg-[url('/src/assets/images/news/new-bg.png')]">
       <div class="mt-10">
-        <div class="mb-10 flex flex-row mt-10">
+        <div class="my-10 flex flex-row">
           <el-image src="/src/assets/images/title/arrow-left.png" />
           <div class="text-3xl ml-2" style="position: relative; width: 90%">
             <text class="ml-10 mt-4 big-title" style="position: absolute"
@@ -14,10 +14,20 @@
           </div>
         </div>
         <el-container>
-          <el-aside width="455px">
-            <el-image width="450px" height="250px" :src="url" />
+          <el-aside width="450px">
+            <div>
+              <el-carousel width="450px" height="250px">
+                <el-carousel-item
+                  v-for="(item, index) of workNews.slice(0, 4)"
+                  :key="index"
+                  @click="handleClick(item)"
+                >
+                  <el-image :src="item.coverMaterialUrl" />
+                </el-carousel-item>
+              </el-carousel>
+            </div>
           </el-aside>
-          <el-main class="ml-8 mt-5">
+          <el-main class="ml-8 mt-5 mainStyle">
             <div
               class="flex justify-between items-center mb-2"
               style="position: relative"
@@ -31,7 +41,7 @@
             </div>
             <ul>
               <li
-                v-for="(item, index) of workNews.slice(0, 5)"
+                v-for="(item, index) of workNews.slice(4, 8)"
                 :key="index"
                 class="flex justify-between"
               >
@@ -57,17 +67,27 @@
 
       <div class="mt-5">
         <el-container>
-          <el-aside width="460px">
-            <el-row>
-              <el-image class="w-56 h-32 mr-2 mb-2" :src="url" :fit="fit" />
-              <el-image class="w-56 h-32 mb-2" :src="url" :fit="fit" />
+          <el-aside width="450px">
+            <el-row class="image">
+              <el-image
+                v-for="(item, index) of workNews.slice(0, 2)"
+                :key="index"
+                class="w-56 h-32 mr-2 mb-2"
+                :src="item.coverMaterialUrl"
+                @click="handleClick(item)"
+              />
             </el-row>
-            <el-row>
-              <el-image class="w-56 h-32 mr-2 mb-2" :src="url" :fit="fit" />
-              <el-image class="w-56 h-32 mb-2" :src="url" :fit="fit" />
+            <el-row class="image">
+              <el-image
+                v-for="(item, index) of workNews.slice(2, 4)"
+                :key="index"
+                class="w-56 h-32 mr-2 mb-2"
+                :src="item.coverMaterialUrl"
+                @click="handleClick(item)"
+              />
             </el-row>
           </el-aside>
-          <el-main class="ml-8 mt-5" width="800dx">
+          <el-main class="ml-8 mt-5 mainStyle">
             <div
               class="flex justify-between items-center mb-2"
               style="position: relative"
@@ -81,7 +101,7 @@
             </div>
             <ul>
               <li
-                v-for="(item, index) of workNews.slice(0, 5)"
+                v-for="(item, index) of workNews.slice(5, 9)"
                 :key="index"
                 class="flex justify-between"
               >
@@ -123,7 +143,7 @@
           <el-main class="mr-8 mt-5">
             <ul>
               <li
-                v-for="(item, index) of progressNews.slice(0, 5)"
+                v-for="(item, index) of progressNews.slice(0, 4)"
                 :key="index"
                 class="flex justify-between"
               >
@@ -144,8 +164,16 @@
               </li>
             </ul>
           </el-main>
-          <el-aside width="455px">
-            <el-image width="450px" height="250px" :src="url" :fit="fit" />
+          <el-aside width="450px">
+            <el-carousel width="450px" height="250px">
+              <el-carousel-item
+                v-for="(item, index) of progressNews.slice(0, 4)"
+                :key="index"
+                @click="handleClick(item)"
+              >
+                <el-image :src="item.coverMaterialUrl" />
+              </el-carousel-item>
+            </el-carousel>
           </el-aside>
         </el-container>
       </div>
@@ -157,9 +185,10 @@
 import { onMounted, reactive, ref } from "vue";
 import { listNew } from "@/api/new";
 import moment from "moment";
+import router from "@/router";
 
-const url =
-  "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg";
+const { VITE_API_PATH } = import.meta.env;
+
 defineOptions({
   name: "New"
 });
@@ -177,18 +206,32 @@ async function showNews() {
   loading.value = true;
   const { rows } = await listNew();
   dataList.data = rows;
+  dataList.data.forEach(item => {
+    item.coverMaterialUrl = `${VITE_API_PATH}/static/${item.coverMaterialUrl}`;
+  });
   workNews.value = classifyNews("工作动态");
   progressNews.value = classifyNews("进展成效");
-  console.log(dataList);
-  console.log(workNews);
+  console.log(dataList.data[1].coverMaterialUrl);
+  // console.log(dataList.coverMaterialUrl);
+  // console.log(dataList);
+  // console.log(workNews);
+}
+
+function handleClick(item) {
+  router.push({ name: "Information", params: { id: item.id } });
 }
 
 const classifyNews = newType => {
   return dataList.data.filter(news => news.type === newType);
 };
+/*按照浏览量排序*/
+// const viewNews = computed(() => {
+//   return workNews.value.sort((a, b) => b.viewCount - a.viewCount);
+// });
 
 onMounted(async () => {
   await showNews();
+  // console.log(viewNews);
 });
 </script>
 
@@ -211,5 +254,13 @@ onMounted(async () => {
 .big-title {
   font-size: 44px;
   color: #ecf2ff;
+}
+
+.image {
+  flex-wrap: nowrap;
+}
+
+.mainStyle {
+  min-width: 850px;
 }
 </style>
