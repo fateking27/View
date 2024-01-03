@@ -21,7 +21,25 @@ export default {
       }
     },
     {
-      path: "introduce",
+      path: "/statement",
+      name: "Statement",
+      component: () => import("@/views/webInformation/Statement.vue"),
+      meta: {
+        title: "网站申明",
+        showLink: false
+      }
+    },
+    {
+      path: "/contactUs",
+      name: "ContactUs",
+      component: () => import("@/views/webInformation/ContactUs.vue"),
+      meta: {
+        title: "联系我们",
+        showLink: false
+      }
+    },
+    {
+      path: "/introduce",
       name: "Introduce",
       component: () => import("@/views/introduce/index.vue"),
       meta: {
