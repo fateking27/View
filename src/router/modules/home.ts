@@ -12,11 +12,38 @@ export default {
   },
   children: [
     {
-      path: "/new",
+      path: "new",
       name: "New",
       component: () => import("@/views/new/index.vue"),
       meta: {
         title: "首页",
+        showLink: false
+      }
+    },
+    {
+      path: "/statement",
+      name: "Statement",
+      component: () => import("@/views/webInformation/Statement.vue"),
+      meta: {
+        title: "网站申明",
+        showLink: false
+      }
+    },
+    {
+      path: "/contactUs",
+      name: "ContactUs",
+      component: () => import("@/views/webInformation/ContactUs.vue"),
+      meta: {
+        title: "联系我们",
+        showLink: false
+      }
+    },
+    {
+      path: "/siteMap",
+      name: "SiteMap",
+      component: () => import("@/views/webInformation/siteMap.vue"),
+      meta: {
+        title: "网站地图",
         showLink: false
       }
     },
@@ -30,7 +57,7 @@ export default {
       }
     },
     {
-      path: "/results",
+      path: "results",
       name: "Results",
       component: () => import("@/views/results/index.vue"),
       meta: {
@@ -48,7 +75,7 @@ export default {
       }
     },
     {
-      path: "/information/:id",
+      path: "information/:id",
       name: "Information",
       component: () => import("@/views/new/information/index.vue"),
       meta: {
@@ -57,7 +84,7 @@ export default {
       }
     },
     {
-      path: "/service",
+      path: "service",
       name: "Service",
       component: () => import("@/views/service/index.vue"),
       meta: {
@@ -124,7 +151,25 @@ export default {
       name: "Fix",
       component: () => import("@/views/results/fix/index.vue"),
       meta: {
-        title: "预期成果",
+        title: "修复进度",
+        showLink: false
+      }
+    },
+    {
+      path: "/current",
+      name: "Current",
+      component: () => import("@/views/results/currentResults/index.vue"),
+      meta: {
+        title: "当前成果",
+        showLink: false
+      }
+    },
+    {
+      path: "page/:id",
+      name: "Page",
+      component: () => import("@/views/results/page/index.vue"),
+      meta: {
+        title: "阶段展示",
         showLink: false
       }
     }

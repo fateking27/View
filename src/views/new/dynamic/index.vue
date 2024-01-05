@@ -80,3 +80,25 @@ onMounted(async () => {
   await showNews();
 });
 </script>
+
+<style>
+.bg-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
+.newsTitle {
+  padding-left: 5px;
+  border-left: 5px solid #5587eb;
+}
+
+.big-title {
+  font-size: 44px;
+  color: #ecf2ff;
+}
+</style>

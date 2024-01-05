@@ -15,7 +15,13 @@
         </div>
         <el-container>
           <el-aside width="450px">
-            <el-image width="450px" height="250px" :src="url" :fit="fit" />
+            <el-image
+              width="450px"
+              height="250px"
+              v-for="(item, index) of source"
+              :key="index"
+              :src="item.coverMaterialUrl"
+            />
           </el-aside>
           <el-main class="ml-8">
             <div class="container mx-auto">
@@ -43,7 +49,13 @@
         </div>
         <el-container>
           <el-aside width="450px">
-            <el-image width="450px" height="250px" :src="url" :fit="fit" />
+            <el-image
+              width="450px"
+              height="250px"
+              v-for="(item, index) of meaning"
+              :key="index"
+              :src="item.coverMaterialUrl"
+            />
           </el-aside>
           <el-main class="ml-8 no-padding">
             <div class="container">
@@ -82,7 +94,13 @@
             </div>
           </el-main>
           <el-aside width="450px">
-            <el-image width="450px" height="250px" :src="url" :fit="fit" />
+            <el-image
+              width="450px"
+              height="250px"
+              v-for="(item, index) of expectation"
+              :key="index"
+              :src="item.coverMaterialUrl"
+            />
           </el-aside>
         </el-container>
       </div>
@@ -94,11 +112,10 @@
 import { onMounted, reactive, ref } from "vue";
 import { listIntroduce } from "@/api/new";
 
+const { VITE_API_PATH } = import.meta.env;
 defineOptions({
   name: "Introduce"
 });
-const url =
-  "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg";
 
 const dataList = reactive({
   data: []
@@ -109,22 +126,23 @@ const loading = ref(true);
 const form = reactive({
   releaseStatus: "1"
 });
+const meaning = ref([]);
+const expectation = ref([]);
+const source = ref([]);
 
 async function showNews() {
   loading.value = true;
   const { rows } = await listIntroduce(form);
   dataList.data = rows;
-  loading.value = false;
-  // console.log(dataList.data[0].type)
   meaning.value = classifyNews("建设意义");
   expectation.value = classifyNews("预期成果");
   source.value = classifyNews("项目来源");
-
-  console.log(source);
+  loading.value = false;
+  dataList.data.forEach(item => {
+    item.coverMaterialUrl = `${VITE_API_PATH}/static/${item.coverMaterialUrl}`;
+  });
 }
-const meaning = ref([]);
-const expectation = ref([]);
-const source = ref([]);
+
 // const publishNews = (status) => {
 //   return dataList.data.filter((news) => news.release_status === status);
 // };
@@ -152,5 +170,15 @@ onMounted(async () => {
   width: 100%;
   background-position: center;
   background-size: cover;
+}
+
+.newsTitle {
+  padding-left: 5px;
+  border-left: 5px solid #5587eb;
+}
+
+.big-title {
+  font-size: 44px;
+  color: #ecf2ff;
 }
 </style>

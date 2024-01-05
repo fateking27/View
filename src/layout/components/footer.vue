@@ -2,13 +2,19 @@
   <div class="footer">
     <div class="flex flex-col justify-center">
       <div class="links text-center mt-5">
-        <a href="#">关于本网</a>
+        <!-- <a href="#">关于本网</a>
+        <span class="separator">|</span> -->
+        <router-link to="/ContactUs">
+          <a href="">联系我们</a>
+        </router-link>
         <span class="separator">|</span>
-        <a href="#">联系我们</a>
+        <router-link to="/statement">
+          <a href="">网站声明</a>
+        </router-link>
         <span class="separator">|</span>
-        <a href="#">网站声明</a>
-        <span class="separator">|</span>
-        <a href="#">网站纠错</a>
+        <router-link to="/siteMap">
+          <a href="">网站地图</a>
+        </router-link>
       </div>
     </div>
     <div class="flex flex-col">
@@ -24,7 +30,7 @@
 <style scoped>
 .footer {
   width: 100%;
-  background-image: url("/src/assets/images/news/footer.png");
+  background-image: url("/src/assets/layout/footer-bg.png");
   background-repeat: no-repeat;
   background-size: cover;
 }

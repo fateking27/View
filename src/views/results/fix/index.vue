@@ -5,16 +5,13 @@
         <el-text>当前位置：</el-text>
         <el-breadcrumb>
           <el-breadcrumb-item :to="{ path: '/results' }"
-            >成果介绍</el-breadcrumb-item
+            >成果内容展示</el-breadcrumb-item
           >
-          <el-breadcrumb-item>预期成果</el-breadcrumb-item>
+          <el-breadcrumb-item>修复进度</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
       <el-main>
-        <div
-          class="bg-white container mx-auto"
-          style="width: 1200px; min-height: 800px"
-        >
+        <div class="bg-white container mx-auto p-10" style="min-height: 800px">
           <h1
             class="text-center"
             v-for="(item, index) of dataList.data"
@@ -22,8 +19,8 @@
           >
             {{ item.title }}
           </h1>
-          <el-container class="mt-10 mb-2">
-            <el-text style="margin-left: 150px">发布日期：</el-text>
+          <el-container class="mt-8 mb-2">
+            <el-text style="margin-left: 100px">发布日期：</el-text>
             <el-text v-for="(item, index) of dataList.data" :key="index">{{
               moment(item.releaseTime).format("YYYY-MM-DD")
             }}</el-text>
@@ -38,7 +35,7 @@
               <el-button size="small" @click="handleClickSmall">小</el-button>
             </div>
           </el-container>
-          <hr class="mx-24 mb-6" />
+          <hr class="mx-20 mb-6" />
           <el-container class="justify-center">
             <el-text
               style="width: 1000px; height: auto"

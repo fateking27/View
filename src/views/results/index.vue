@@ -17,11 +17,17 @@
         </div>
         <el-container>
           <el-aside width="450px" height="250px">
-            <el-image :src="imgUrl" :fit="fit" />
+            <el-image
+              width="450px"
+              height="250px"
+              v-for="(item, index) of progressList.data"
+              :key="index"
+              :src="item.coverMaterialUrl"
+            />
           </el-aside>
           <el-main class="ml-10 no-padding">
             <div class="container mx-auto">
-              <el-text v-for="(item, index) of dataList.data" :key="index">
+              <el-text v-for="(item, index) of progressList.data" :key="index">
                 {{ item.content }}
               </el-text>
             </div>
@@ -44,32 +50,37 @@
             <text class="ml-10 mt-4 big-title" style="position: absolute"
               >CURRENTRESULTS</text
             >
-            <router-link to="/" style="position: absolute"
-              >当前成果</router-link
-            >
+            <text style="position: absolute">当前成果</text>
           </div>
         </div>
         <el-container>
           <el-header>
             <el-container>
-              <el-text> 红树林/盐生态现状： </el-text>
-              <el-text>
-                生态系统稳定、红树林植被、生物群落和环境要素等方面整体稳定，可自我维持
+              <el-text>现状： </el-text>
+              <el-text v-for="(item, index) of dataList.data" :key="index">
+                {{ item.ecologicalStatus }}
               </el-text>
             </el-container>
 
             <el-container>
-              <el-text> 红树林/盐生态分级： </el-text>
-              <el-text> I级 </el-text>
+              <el-text> 分级： </el-text>
+              <el-text v-for="(item, index) of dataList.data" :key="index">
+                {{ item.rank }}
+              </el-text>
             </el-container>
 
             <el-container>
-              <el-text> 红树林/盐沼减灾功能： </el-text>
-              <el-text> 优 </el-text>
+              <el-text> 功能： </el-text>
+              <el-text v-for="(item, index) of dataList.data" :key="index">
+                {{ item.disasterReduction }}
+              </el-text>
             </el-container>
           </el-header>
           <el-main>
             <el-container style="width: 1200px; height: 300px">
+              <!--              <div class="demo-image__lazy">-->
+              <!--                <el-image v-for="url in urls" :key="url" :src="url" lazy />-->
+              <!--              </div>-->
               <el-image :src="imgUrl" />
               <el-image :src="imgUrl" />
               <el-image :src="imgUrl" />
@@ -87,25 +98,35 @@
             <text class="ml-10 mt-4 big-title" style="position: absolute"
               >STAGEPRESENTATION</text
             >
-            <router-link to="/" style="position: absolute"
-              >阶段展示</router-link
-            >
+            <text to="/" style="position: absolute">阶段展示</text>
           </div>
         </div>
         <el-container>
-          <el-aside width="80px" class="mr-10 mt-10">
-            <div v-for="(item, index) of stage" :key="index">
-              <el-text class="stageFont">{{ item.title }}</el-text>
+          <el-aside>
+            <div
+              v-for="(item, index) of pageList.data"
+              :key="index"
+              width="80px"
+              class="mr-10 mt-10"
+            >
+              <router-link :to="{ name: 'Page', params: { id: item.id } }">
+                {{ item.stageName }}</router-link
+              >
+              <ei-text>
+                {{ item.stageTime }}
+              </ei-text>
             </div>
           </el-aside>
           <el-main>
-            <div class="block text-center" style="width: 750px; height: 500px">
-              <el-carousel>
+            <div class="block text-center" style="width: 750px; height: 700px">
+              <el-carousel width="600px" height="550px">
                 <el-carousel-item v-for="(item, index) of urls" :key="index">
-                  <el-image :src="item" />
+                  <el-image :src="item.url" />
+                  <el-text>{{ item.title }}</el-text>
                 </el-carousel-item>
               </el-carousel>
             </div>
+            <div />
           </el-main>
         </el-container>
       </div>
@@ -115,7 +136,9 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from "vue";
-import { listResults } from "@/api/new";
+import { listCurrent, listPage, listProgress } from "@/api/new";
+
+const { VITE_API_PATH } = import.meta.env;
 
 defineOptions({
   name: "Results"
@@ -124,16 +147,28 @@ const imgUrl =
   "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg";
 
 const urls = [
-  "https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg",
-  "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-  "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg",
-  "https://fuss10.elemecdn.com/9/bb/e27858e973f5d7d3904835f46abbdjpeg.jpeg",
-  "https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg"
+  {
+    url: "https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg",
+    title: "阶段一"
+  },
+  {
+    url: "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
+    title: "阶段二"
+  },
+  {
+    url: "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg",
+    title: "阶段三"
+  }
 ];
 
-const stage = [{ title: "阶段一二" }, { title: "阶段二" }, { title: "阶段三" }];
-
 const dataList = reactive({
+  data: []
+});
+
+const pageList = reactive({
+  data: []
+});
+const progressList = reactive({
   data: []
 });
 
@@ -145,10 +180,9 @@ const form = reactive({
 
 async function showNews() {
   loading.value = true;
-  const { rows } = await listResults(form);
+  const { rows } = await listCurrent(form);
   dataList.data = rows;
   loading.value = false;
-  console.log(dataList);
   // progress.value = classifyNews("修复进度");
 }
 // const progress = ref([]);
@@ -157,8 +191,28 @@ async function showNews() {
 //   return dataList.data.filter((news) => news.type=== newType);
 // };
 
+async function showPage() {
+  loading.value = true;
+  const { rows } = await listPage();
+  pageList.data = rows;
+  console.log(pageList.data[0].stageTime);
+  loading.value = false;
+}
+
+async function showProgress() {
+  loading.value = true;
+  const { rows } = await listProgress();
+  progressList.data = rows;
+  loading.value = false;
+  progressList.data.forEach(item => {
+    item.coverMaterialUrl = `${VITE_API_PATH}/static/${item.coverMaterialUrl}`;
+  });
+}
+
 onMounted(async () => {
   await showNews();
+  await showPage();
+  await showProgress();
 });
 </script>
 
@@ -181,5 +235,15 @@ onMounted(async () => {
 .stageFont {
   font-size: 20px;
   line-height: 3;
+}
+
+.newsTitle {
+  padding-left: 5px;
+  border-left: 5px solid #5587eb;
+}
+
+.big-title {
+  font-size: 44px;
+  color: #ecf2ff;
 }
 </style>

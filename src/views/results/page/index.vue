@@ -4,24 +4,15 @@
       <el-header class="flex justify-start items-center">
         <el-text>当前位置：</el-text>
         <el-breadcrumb>
-          <el-breadcrumb-item :to="{ path: '/new' }"
-            >新闻动态</el-breadcrumb-item
+          <el-breadcrumb-item :to="{ path: '/results' }"
+            >成果内容展示</el-breadcrumb-item
           >
-          <el-breadcrumb-item
-            v-if="newsData.data.type === '工作动态'"
-            :to="{ path: '/dynamic' }"
-            >工作动态</el-breadcrumb-item
-          >
-          <el-breadcrumb-item
-            v-if="newsData.data.type === '进展成效'"
-            :to="{ path: '/progress' }"
-            >进展成效</el-breadcrumb-item
-          >
+          <el-breadcrumb-item>阶段成果</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
       <el-main>
         <div class="bg-white container mx-auto p-10" style="min-height: 800px">
-          <h1 class="text-center">{{ newsData.data.name }}</h1>
+          <h1 class="text-center">{{ newsData.data.title }}</h1>
           <el-container class="mt-8 mb-2">
             <el-text style="margin-left: 100px">发布日期：</el-text>
             <el-text>{{
@@ -59,12 +50,12 @@
 <script lang="ts" setup>
 import { onMounted, reactive } from "vue";
 import { useRoute } from "vue-router";
-import { getBrowse } from "@/api/new";
+import { getPage } from "@/api/new";
 import moment from "moment";
 
 const route = useRoute();
 defineOptions({
-  name: "Information"
+  name: "Page"
 });
 
 const newsData = reactive({
@@ -89,10 +80,10 @@ const handleClickSmall = () => {
 };
 
 onMounted(async () => {
-  const newsId = route.params.id;
-  const response = await getBrowse(newsId);
-  // await getBrowse(newsId);
+  const stageId = route.params.id;
+  const response = await getPage(stageId);
+  // await getPage(stageId);
   newsData.data = response.data;
-  console.log(newsData);
+  console.log(newsData.data);
 });
 </script>

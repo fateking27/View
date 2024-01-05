@@ -4,27 +4,31 @@
       <el-header class="flex justify-start items-center">
         <el-text>当前位置：</el-text>
         <el-breadcrumb>
-          <el-breadcrumb-item :to="{ path: '/introduce' }"
-            >门户及项目介绍</el-breadcrumb-item
+          <el-breadcrumb-item :to="{ path: '/results' }"
+            >成果内容展示</el-breadcrumb-item
           >
-          <el-breadcrumb-item>项目来源</el-breadcrumb-item>
+          <el-breadcrumb-item>当前成果</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
       <el-main>
-        <div class="bg-white container mx-auto p-10" style="min-height: 800px">
-          <h1 class="text-center" v-for="(item, index) of source" :key="index">
+        <div class="bg-white container mx-auto" style="min-height: 800px">
+          <h1
+            class="text-center"
+            v-for="(item, index) of dataList.data"
+            :key="index"
+          >
             {{ item.title }}
           </h1>
-          <el-container class="mt-8 mb-2">
+          <el-container class="mt-10 mb-2">
             <el-text style="margin-left: 100px">发布日期：</el-text>
-            <el-text v-for="(item, index) of source" :key="index">{{
+            <el-text v-for="(item, index) of dataList.data" :key="index">{{
               moment(item.releaseTime).format("YYYY-MM-DD")
             }}</el-text>
             <el-text style="margin-left: 20px">来源：</el-text>
-            <el-text v-for="(item, index) of source" :key="index">{{
+            <el-text v-for="(item, index) of dataList.data" :key="index">{{
               item.source
             }}</el-text>
-            <el-text style="margin-left: 600px">A字体</el-text>
+            <el-text style="margin-left: 550px">A字体</el-text>
             <div class="ml-5">
               <el-button size="small" @click="handleClickLarge">大</el-button>
               <el-button size="small" @click="handleClickMedium">中</el-button>
@@ -32,11 +36,11 @@
             </div>
           </el-container>
           <hr class="mx-20 mb-6" />
-          <el-container class="justify-center mx-32">
+          <el-container class="justify-center">
             <el-text
               style="width: 1000px; height: auto"
               class="indent-7"
-              v-for="(item, index) of source"
+              v-for="(item, index) of dataList.data"
               :key="index"
               :style="{ fontSize: newSize.fontSize }"
             >
@@ -51,11 +55,11 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from "vue";
-import { listIntroduce } from "@/api/new";
+import { listResults } from "@/api/new";
 import moment from "moment";
 
 defineOptions({
-  name: "Detail"
+  name: "Fix"
 });
 
 const dataList = reactive({
@@ -70,17 +74,11 @@ const form = reactive({
 
 async function showNews() {
   loading.value = true;
-  const { rows } = await listIntroduce(form);
+  const { rows } = await listResults(form);
   dataList.data = rows;
-  source.value = classifyNews("项目来源");
-  loading.value = false;
-  console.log(source);
-}
-const source = ref([]);
 
-const classifyNews = newType => {
-  return dataList.data.filter(news => news.type === newType);
-};
+  loading.value = false;
+}
 
 const newSize = reactive({
   data: [],
