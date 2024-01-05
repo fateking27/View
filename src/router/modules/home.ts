@@ -4,7 +4,7 @@ export default {
   path: "/",
   name: "Home",
   component: Layout,
-  redirect: "/new",
+  redirect: "new",
   meta: {
     icon: "homeFilled",
     title: "首页",
@@ -111,7 +111,7 @@ export default {
       }
     },
     {
-      path: "/detail",
+      path: "/detail/:id",
       name: "Detail",
       component: () => import("@/views/introduce/detail/index.vue"),
       meta: {
@@ -120,7 +120,7 @@ export default {
       }
     },
     {
-      path: "/meaning",
+      path: "/meaning/:id",
       name: "Meaning",
       component: () => import("@/views/introduce/meaning/index.vue"),
       meta: {
@@ -129,7 +129,7 @@ export default {
       }
     },
     {
-      path: "/expectation",
+      path: "/expectation/:id",
       name: "Expectation",
       component: () => import("@/views/introduce/expectation/index.vue"),
       meta: {
@@ -138,7 +138,7 @@ export default {
       }
     },
     {
-      path: "/fix",
+      path: "/fix/:id",
       name: "Fix",
       component: () => import("@/views/results/fix/index.vue"),
       meta: {

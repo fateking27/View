@@ -70,7 +70,7 @@
           <el-aside width="450px">
             <el-row class="image">
               <el-image
-                v-for="(item, index) of workNews.slice(0, 2)"
+                v-for="(item, index) of viewNews.slice(0, 2)"
                 :key="index"
                 class="w-56 h-32 mr-2 mb-2"
                 :src="item.coverMaterialUrl"
@@ -101,7 +101,7 @@
             </div>
             <ul>
               <li
-                v-for="(item, index) of workNews.slice(5, 9)"
+                v-for="(item, index) of viewNews.slice(5, 9)"
                 :key="index"
                 class="flex justify-between"
               >
@@ -182,7 +182,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, computed } from "vue";
 import { listNew } from "@/api/new";
 import moment from "moment";
 import router from "@/router";
@@ -225,13 +225,14 @@ const classifyNews = newType => {
   return dataList.data.filter(news => news.type === newType);
 };
 /*按照浏览量排序*/
-// const viewNews = computed(() => {
-//   return workNews.value.sort((a, b) => b.viewCount - a.viewCount);
-// });
+const viewNews = computed(() => {
+  const workNewsCopy = workNews.value.slice();
+  return workNewsCopy.sort((a, b) => b.viewCount - a.viewCount);
+});
 
 onMounted(async () => {
   await showNews();
-  // console.log(viewNews);
+  console.log(viewNews);
 });
 </script>
 

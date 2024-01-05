@@ -8,7 +8,11 @@
             <text class="ml-10 mt-4 big-title" style="position: absolute"
               >PROJECTSOURCE</text
             >
-            <router-link to="/detail" style="position: absolute"
+            <router-link
+              v-for="(item, index) of source"
+              :key="index"
+              :to="{ name: 'Detail', params: { id: item.id } }"
+              style="position: absolute"
               >项目来源</router-link
             >
           </div>
@@ -25,9 +29,11 @@
           </el-aside>
           <el-main class="ml-8">
             <div class="container mx-auto">
-              <el-text v-for="(item, index) of source" :key="index">
-                {{ item.content }}
-              </el-text>
+              <div
+                v-for="(item, index) of source"
+                :key="index"
+                v-html="item.content"
+              />
             </div>
           </el-main>
         </el-container>
@@ -42,7 +48,11 @@
             <text class="ml-10 mt-4 big-title" style="position: absolute"
               >CONSTRUCTIONSIGNIFICANCE</text
             >
-            <router-link to="/meaning" style="position: absolute"
+            <router-link
+              v-for="(item, index) of meaning"
+              :key="index"
+              :to="{ name: 'Meaning', params: { id: item.id } }"
+              style="position: absolute"
               >建设意义</router-link
             >
           </div>
@@ -59,25 +69,26 @@
           </el-aside>
           <el-main class="ml-8 no-padding">
             <div class="container">
-              <el-text v-for="(item, index) of meaning" :key="index">
-                {{ item.content }}
-              </el-text>
+              <div
+                v-for="(item, index) of meaning"
+                :key="index"
+                v-html="item.content"
+              />
             </div>
           </el-main>
         </el-container>
       </div>
 
       <div class="my-10">
-        <!--      <div class="text-3xl mb-10 mr-8 flex items-center justify-end">-->
-        <!--        <router-link to="/">预期成果</router-link>-->
-        <!--      </div>-->
         <div class="mb-10 flex flex-row justify-end mt-10">
           <div class="text-3xl ml-2" style="position: relative; width: 15%">
             <text class="-ml-80 mt-4 big-title" style="position: absolute"
               >EXPECTEDRESULTS</text
             >
             <router-link
-              to="/expectation"
+              v-for="(item, index) of expectation"
+              :key="index"
+              :to="{ name: 'Expectation', params: { id: item.id } }"
               class="ml-10"
               style="position: absolute"
               >预期成果</router-link
@@ -88,9 +99,11 @@
         <el-container>
           <el-main class="mr-8 mb-5 no-padding">
             <div class="container mx-auto">
-              <el-text v-for="(item, index) of expectation" :key="index">
-                {{ item.content }}
-              </el-text>
+              <div
+                v-for="(item, index) of expectation"
+                :key="index"
+                v-html="item.content"
+              />
             </div>
           </el-main>
           <el-aside width="450px">

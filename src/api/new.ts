@@ -11,6 +11,7 @@ export const getNew = id => {
   return http.request<Result>("get", `/business/news_info/${id}`);
 };
 
+/**查询新闻信息详情统计浏览量**/
 export const getBrowse = id => {
   return http.request<Result>("get", `/business/news_info/ditail/${id}`);
 };
@@ -22,11 +23,21 @@ export const listIntroduce = (data?: object) => {
   });
 };
 
+/**查询项目介绍详情统计浏览量**/
+export const detailIntroduce = id => {
+  return http.request<Result>("get", `/business/project_intro/ditail/${id}`);
+};
+
 /**查询项目成果**/
 export const listResults = (data?: object) => {
   return http.request<Result>("get", "/business/project_res/released", {
     params: data
   });
+};
+
+/**查询修复进度详情统计浏览量**/
+export const detailResult = id => {
+  return http.request<Result>("get", `/business/project_res/ditail/${id}`);
 };
 
 /**查询当前成果**/

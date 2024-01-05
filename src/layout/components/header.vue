@@ -5,7 +5,7 @@
       class="menu"
       mode="horizontal"
       router="true"
-      :default-active="active"
+      :default-active="activeIndex"
     >
       <el-menu-item index="/new">新闻信息</el-menu-item>
       <el-menu-item index="/introduce">门户及项目介绍</el-menu-item>
@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, watch, computed } from "vue";
 import { ElHeader, ElMenu, ElMenuItem, ElInput } from "element-plus";
 import { useRoute } from "vue-router";
 
@@ -48,8 +48,37 @@ export default defineComponent({
         active.value = value;
       }
     );
+
+    const activeIndex = computed(() => {
+      const { name } = route;
+      switch (name) {
+        case "New":
+        case "Information":
+        case "Dynamic":
+        case "Progress":
+          return "/new";
+        case "Introduce":
+        case "Detail":
+        case "Meaning":
+        case "Expectation":
+          return "/introduce";
+        case "Results":
+        case "Fix":
+        case "Current":
+        case "Page":
+          return "/results";
+        default:
+          return "/service";
+      }
+    });
+
+    watch(activeIndex, value => {
+      active.value = value;
+    });
+
     return {
-      active
+      active,
+      activeIndex
     };
   }
 });

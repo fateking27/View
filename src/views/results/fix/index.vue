@@ -12,23 +12,15 @@
       </el-header>
       <el-main>
         <div class="bg-white container mx-auto p-10" style="min-height: 800px">
-          <h1
-            class="text-center"
-            v-for="(item, index) of dataList.data"
-            :key="index"
-          >
-            {{ item.title }}
+          <h1 class="text-center">
+            {{ newsData.data.title }}
           </h1>
           <el-container class="mt-8 mb-2">
             <el-text style="margin-left: 100px">发布日期：</el-text>
-            <el-text v-for="(item, index) of dataList.data" :key="index">{{
-              moment(item.releaseTime).format("YYYY-MM-DD")
-            }}</el-text>
+            <el-text>{{ newsData.data.releaseTime }}</el-text>
             <el-text style="margin-left: 20px">来源：</el-text>
-            <el-text v-for="(item, index) of dataList.data" :key="index">{{
-              item.source
-            }}</el-text>
-            <el-text style="margin-left: 550px">A字体</el-text>
+            <el-text>{{ newsData.data.source }}</el-text>
+            <el-text style="margin-left: 600px">A字体</el-text>
             <div class="ml-5">
               <el-button size="small" @click="handleClickLarge">大</el-button>
               <el-button size="small" @click="handleClickMedium">中</el-button>
@@ -36,16 +28,11 @@
             </div>
           </el-container>
           <hr class="mx-20 mb-6" />
-          <el-container class="justify-center">
-            <el-text
-              style="width: 1000px; height: auto"
-              class="indent-7"
-              v-for="(item, index) of dataList.data"
-              :key="index"
+          <el-container class="justify-center mx-32">
+            <div
               :style="{ fontSize: newSize.fontSize }"
-            >
-              {{ item.content }}
-            </el-text>
+              v-html="newsData.data.content"
+            />
           </el-container>
         </div>
       </el-main>
@@ -54,35 +41,49 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from "vue";
-import { listResults } from "@/api/new";
-import moment from "moment";
+import { onMounted, reactive } from "vue";
+import { detailResult } from "@/api/new";
+
+import { useRoute } from "vue-router";
 
 defineOptions({
   name: "Fix"
 });
 
-const dataList = reactive({
+// const dataList = reactive({
+//   data: []
+// });
+//
+// const loading = ref(true);
+//
+// const form = reactive({
+//   releaseStatus: "1"
+// });
+//
+// async function showNews() {
+//   loading.value = true;
+//   const { rows } = await listResults(form);
+//   dataList.data = rows;
+//
+//   loading.value = false;
+// }
+
+const route = useRoute();
+const newsData = reactive({
   data: []
 });
 
-const loading = ref(true);
-
-const form = reactive({
-  releaseStatus: "1"
+onMounted(async () => {
+  const newsId = route.params.id;
+  const response = await detailResult(newsId);
+  // await getBrowse(newsId);
+  newsData.data = response.data;
+  console.log(newsData);
 });
-
-async function showNews() {
-  loading.value = true;
-  const { rows } = await listResults(form);
-  dataList.data = rows;
-
-  loading.value = false;
-}
 
 const newSize = reactive({
   data: [],
-  fontSize: "16px" // 默认字体大小
+  fontSize: "18px" // 默认字体大小
 });
 
 const handleClickLarge = () => {
@@ -96,8 +97,4 @@ const handleClickMedium = () => {
 const handleClickSmall = () => {
   newSize.fontSize = "14px";
 };
-
-onMounted(async () => {
-  await showNews();
-});
 </script>

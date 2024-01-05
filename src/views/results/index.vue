@@ -10,7 +10,11 @@
             <text class="ml-10 mt-4 big-title" style="position: absolute"
               >REPAIRPROGRESS</text
             >
-            <router-link to="/fix" style="position: absolute"
+            <router-link
+              v-for="(item, index) of progressList.data"
+              :key="index"
+              :to="{ name: 'Fix', params: { id: item.id } }"
+              style="position: absolute"
               >修复进度</router-link
             >
           </div>
@@ -27,20 +31,22 @@
           </el-aside>
           <el-main class="ml-10 no-padding">
             <div class="container mx-auto">
-              <el-text v-for="(item, index) of progressList.data" :key="index">
-                {{ item.content }}
-              </el-text>
+              <div
+                v-for="(item, index) of progressList.data"
+                :key="index"
+                v-html="item.content"
+              />
             </div>
           </el-main>
         </el-container>
       </div>
     </div>
-    <router-link to="/display">
-      <el-image
-        style="width: 1200px; height: 200px; margin-top: 20px"
-        src="src/assets/images/news/results.png"
-      />
-    </router-link>
+    <!--    <router-link to="/display">-->
+    <el-image
+      style="width: 1200px; height: 200px; margin-top: 20px"
+      src="src/assets/images/news/results.png"
+    />
+    <!--    </router-link>-->
 
     <div class="bg-[url('/src/assets/images/news/result-bg.png')] bg-imge mt-8">
       <div class="mt-10">
@@ -104,25 +110,29 @@
         <el-container>
           <el-aside>
             <div
-              v-for="(item, index) of pageList.data"
+              v-for="(item, index) of sortedPageList"
               :key="index"
-              width="80px"
-              class="mr-10 mt-10"
+              width="100px"
+              class="mr-10 mt-10 flex justify-between"
             >
               <router-link :to="{ name: 'Page', params: { id: item.id } }">
                 {{ item.stageName }}</router-link
               >
-              <ei-text>
-                {{ item.stageTime }}
-              </ei-text>
+              <text> {{ item.stageBeginTime }} - {{ item.stageEndTime }} </text>
             </div>
           </el-aside>
           <el-main>
-            <div class="block text-center" style="width: 750px; height: 700px">
-              <el-carousel width="600px" height="550px">
-                <el-carousel-item v-for="(item, index) of urls" :key="index">
-                  <el-image :src="item.url" />
-                  <el-text>{{ item.title }}</el-text>
+            <div class="block text-center" style="width: 750px; height: 800px">
+              <el-carousel width="600px" height="600px">
+                <el-carousel-item
+                  v-for="(item, index) of pageList.data"
+                  :key="index"
+                  @click="handleClick(item)"
+                >
+                  <el-image :src="item.coverMaterialUrl" />
+                  <div>
+                    <text>{{ item.stageName }}</text>
+                  </div>
                 </el-carousel-item>
               </el-carousel>
             </div>
@@ -135,8 +145,9 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, computed } from "vue";
 import { listCurrent, listPage, listProgress } from "@/api/new";
+import router from "@/router";
 
 const { VITE_API_PATH } = import.meta.env;
 
@@ -145,21 +156,6 @@ defineOptions({
 });
 const imgUrl =
   "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg";
-
-const urls = [
-  {
-    url: "https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg",
-    title: "阶段一"
-  },
-  {
-    url: "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-    title: "阶段二"
-  },
-  {
-    url: "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg",
-    title: "阶段三"
-  }
-];
 
 const dataList = reactive({
   data: []
@@ -195,9 +191,21 @@ async function showPage() {
   loading.value = true;
   const { rows } = await listPage();
   pageList.data = rows;
-  console.log(pageList.data[0].stageTime);
+  console.log(pageList.data);
+  pageList.data.forEach(item => {
+    item.coverMaterialUrl = `${VITE_API_PATH}/static/${item.coverMaterialUrl}`;
+  });
   loading.value = false;
 }
+
+const sortedPageList = computed(() => {
+  const pageListCopy = pageList.data.slice();
+  return pageListCopy.sort((a, b) => {
+    const timeA = new Date(a.stageBeginTime).getTime();
+    const timeB = new Date(b.stageBeginTime).getTime();
+    return timeA - timeB;
+  });
+});
 
 async function showProgress() {
   loading.value = true;
@@ -207,6 +215,10 @@ async function showProgress() {
   progressList.data.forEach(item => {
     item.coverMaterialUrl = `${VITE_API_PATH}/static/${item.coverMaterialUrl}`;
   });
+}
+
+function handleClick(item) {
+  router.push({ name: "Page", params: { id: item.id } });
 }
 
 onMounted(async () => {
@@ -230,16 +242,6 @@ onMounted(async () => {
   width: 100%;
   background-position: center;
   background-size: cover;
-}
-
-.stageFont {
-  font-size: 20px;
-  line-height: 3;
-}
-
-.newsTitle {
-  padding-left: 5px;
-  border-left: 5px solid #5587eb;
 }
 
 .big-title {

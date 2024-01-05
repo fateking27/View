@@ -29,13 +29,6 @@
           </el-container>
           <hr class="mx-20 mb-6" />
           <el-container class="justify-center mx-32">
-            <!--            <el-text
-              :style="{ fontSize: newSize.fontSize }"
-              style="width: 1000px; height: auto"
-              class="indent-7"
-            >
-              {{ newsData.data.content }}
-            </el-text>-->
             <div
               :style="{ fontSize: newSize.fontSize }"
               v-html="newsData.data.content"
@@ -50,7 +43,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive } from "vue";
 import { useRoute } from "vue-router";
-import { getPage } from "@/api/new";
+import { detailResult } from "@/api/new";
 import moment from "moment";
 
 const route = useRoute();
@@ -81,7 +74,7 @@ const handleClickSmall = () => {
 
 onMounted(async () => {
   const stageId = route.params.id;
-  const response = await getPage(stageId);
+  const response = await detailResult(stageId);
   // await getPage(stageId);
   newsData.data = response.data;
   console.log(newsData.data);

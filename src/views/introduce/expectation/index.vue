@@ -12,22 +12,14 @@
       </el-header>
       <el-main>
         <div class="bg-white container mx-auto p-10" style="min-height: 800px">
-          <h1
-            class="text-center"
-            v-for="(item, index) of expectation"
-            :key="index"
-          >
-            {{ item.title }}
+          <h1 class="text-center">
+            {{ newsData.data.title }}
           </h1>
           <el-container class="mt-8 mb-2">
             <el-text style="margin-left: 100px">发布日期：</el-text>
-            <el-text v-for="(item, index) of expectation" :key="index">{{
-              moment(item.releaseTime).format("YYYY-MM-DD")
-            }}</el-text>
+            <el-text>{{ newsData.data.releaseTime }}</el-text>
             <el-text style="margin-left: 20px">来源：</el-text>
-            <el-text v-for="(item, index) of expectation" :key="index">{{
-              item.source
-            }}</el-text>
+            <el-text>{{ newsData.data.source }}</el-text>
             <el-text style="margin-left: 600px">A字体</el-text>
             <div class="ml-5">
               <el-button size="small" @click="handleClickLarge">大</el-button>
@@ -36,16 +28,11 @@
             </div>
           </el-container>
           <hr class="mx-20 mb-6" />
-          <el-container class="justify-center">
-            <el-text
-              style="width: 1000px; height: auto"
-              class="indent-7"
-              v-for="(item, index) of expectation"
-              :key="index"
+          <el-container class="justify-center mx-32">
+            <div
               :style="{ fontSize: newSize.fontSize }"
-            >
-              {{ item.content }}
-            </el-text>
+              v-html="newsData.data.content"
+            />
           </el-container>
         </div>
       </el-main>
@@ -54,37 +41,49 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from "vue";
-import { listIntroduce } from "@/api/new";
-import moment from "moment";
+import { onMounted, reactive } from "vue";
+import { detailIntroduce } from "@/api/new";
+import { useRoute } from "vue-router";
 
 defineOptions({
   name: "Expectation"
 });
 
-const dataList = reactive({
+// const dataList = reactive({
+//   data: []
+// });
+//
+// const loading = ref(true);
+//
+// const form = reactive({
+//   releaseStatus: "1"
+// });
+
+// async function showNews() {
+//   loading.value = true;
+//   const { rows } = await listIntroduce(form);
+//   dataList.data = rows;
+//   expectation.value = classifyNews("预期成果");
+//   loading.value = false;
+//   console.log(expectation);
+// }
+// const expectation = ref([]);
+//
+// const classifyNews = newType => {
+//   return dataList.data.filter(news => news.type === newType);
+// };
+const route = useRoute();
+const newsData = reactive({
   data: []
 });
 
-const loading = ref(true);
-
-const form = reactive({
-  releaseStatus: "1"
+onMounted(async () => {
+  const newsId = route.params.id;
+  const response = await detailIntroduce(newsId);
+  // await getBrowse(newsId);
+  newsData.data = response.data;
+  console.log(newsData);
 });
-
-async function showNews() {
-  loading.value = true;
-  const { rows } = await listIntroduce(form);
-  dataList.data = rows;
-  expectation.value = classifyNews("预期成果");
-  loading.value = false;
-  console.log(expectation);
-}
-const expectation = ref([]);
-
-const classifyNews = newType => {
-  return dataList.data.filter(news => news.type === newType);
-};
 
 const newSize = reactive({
   data: [],

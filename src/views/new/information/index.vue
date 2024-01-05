@@ -5,7 +5,7 @@
         <el-text>当前位置：</el-text>
         <el-breadcrumb>
           <el-breadcrumb-item :to="{ path: '/new' }"
-            >新闻动态</el-breadcrumb-item
+            >新闻信息</el-breadcrumb-item
           >
           <el-breadcrumb-item
             v-if="newsData.data.type === '工作动态'"
@@ -38,13 +38,6 @@
           </el-container>
           <hr class="mx-20 mb-6" />
           <el-container class="justify-center mx-32">
-            <!--            <el-text
-              :style="{ fontSize: newSize.fontSize }"
-              style="width: 1000px; height: auto"
-              class="indent-7"
-            >
-              {{ newsData.data.content }}
-            </el-text>-->
             <div
               :style="{ fontSize: newSize.fontSize }"
               v-html="newsData.data.content"
