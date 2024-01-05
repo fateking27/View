@@ -34,7 +34,9 @@
                       <router-link to="/detail">项目来源</router-link>
                       &nbsp; &nbsp;
                       <router-link to="/meaning">建设意义</router-link>&nbsp;
-                      &nbsp;
+                      &nbsp; &nbsp;
+                      <router-link to="/expectation">预期成果</router-link
+                      >&nbsp; &nbsp;
                     </div>
                   </div>
                   <div class="results">
