@@ -6,12 +6,12 @@
         <el-breadcrumb>
           <el-breadcrumb-item :to="{ path: '/new' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: '/contactUs' }"
-            >网站信息</el-breadcrumb-item
+            >网站声明</el-breadcrumb-item
           >
         </el-breadcrumb>
       </el-header>
       <el-main>
-        <div class="bg-white container mx-auto p-10" style="min-height: 500px">
+        <div class="bg-white container mx-auto p-10" style="min-height: 600px">
           <h1 class="text-center">网站声明</h1>
           <el-container class="mt-8 mb-2">
             <el-text style="margin-left: 100px">时间：</el-text>

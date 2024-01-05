@@ -36,9 +36,12 @@
               </td>
               <td class="border">
                 <!-- Indiana -->
-                <el-link :href="item.content" target="_blank">{{
-                  item.content
-                }}</el-link>
+                <el-link
+                  :href="item.content"
+                  target="_blank"
+                  @click="onClick(item.id)"
+                  >{{ item.content }}</el-link
+                >
               </td>
               <td class="border">{{ item.type }}</td>
             </tr>
@@ -60,13 +63,17 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive } from "vue";
-import { mapServiceList } from "@/api/service";
+import { mapServiceList, mapDitail } from "@/api/service";
 defineOptions({
   name: "Service"
 });
 const dataList = reactive({
   data: []
 });
+
+const onClick = async id => {
+  await mapDitail(id);
+};
 
 const showMapService = async () => {
   const res = await mapServiceList();
