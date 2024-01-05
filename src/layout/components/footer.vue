@@ -2,8 +2,8 @@
   <div class="footer">
     <div class="flex flex-col justify-center">
       <div class="links text-center mt-5">
-        <a href="#">关于本网</a>
-        <span class="separator">|</span>
+        <!-- <a href="#">关于本网</a>
+        <span class="separator">|</span> -->
         <router-link to="/ContactUs">
           <a href="">联系我们</a>
         </router-link>
@@ -12,7 +12,9 @@
           <a href="">网站声明</a>
         </router-link>
         <span class="separator">|</span>
-        <a href="#">网站纠错</a>
+        <router-link to="/siteMap">
+          <a href="">网站地图</a>
+        </router-link>
       </div>
     </div>
     <div class="flex flex-col">

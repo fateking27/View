@@ -7,3 +7,8 @@ export const mapServiceList = (data?: object) => {
     params: data
   });
 };
+
+/**记录此次浏览记录**/
+export const mapDitail = id => {
+  return http.request<Result>("get", `/business/external/ditail/${id}`);
+};

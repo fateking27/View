@@ -39,6 +39,15 @@ export default {
       }
     },
     {
+      path: "/siteMap",
+      name: "SiteMap",
+      component: () => import("@/views/webInformation/siteMap.vue"),
+      meta: {
+        title: "网站地图",
+        showLink: false
+      }
+    },
+    {
       path: "/introduce",
       name: "Introduce",
       component: () => import("@/views/introduce/index.vue"),
