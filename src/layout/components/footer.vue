@@ -19,9 +19,13 @@
     </div>
     <div class="flex flex-col">
       <div class="flex justify-center p-2 mb-3 mt-4">
-        <span class="mr-10 text-white">主办单位：xxxxxx</span>
-        <span class="mr-10 text-white">版权所有：xxxxx</span>
-        <span class="text-white">网站辨识码：xxxxxxx</span>
+        <span class="mr-10 text-white"
+          >主办单位：中国电建集团昆明勘测设计研究院有限公司</span
+        >
+        <span class="mr-10 text-white"
+          >版权所有：中国电建集团昆明勘测设计研究院有限公司</span
+        >
+        <!-- <span class="text-white">网站辨识码：xxxxxxx</span> -->
       </div>
     </div>
   </div>

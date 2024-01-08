@@ -56,7 +56,7 @@
             <text class="ml-10 mt-4 big-title" style="position: absolute"
               >CURRENTRESULTS</text
             >
-            <text style="position: absolute">当前成果</text>
+            <text id="res" style="position: absolute">当前成果</text>
           </div>
         </div>
         <el-container>
@@ -64,32 +64,38 @@
             <el-container>
               <el-text>现状： </el-text>
               <el-text v-for="(item, index) of dataList.data" :key="index">
-                {{ item.ecologicalStatus }}
+                {{ item.ecologicalStatus }}&nbsp; &nbsp;
               </el-text>
             </el-container>
 
             <el-container>
               <el-text> 分级： </el-text>
               <el-text v-for="(item, index) of dataList.data" :key="index">
-                {{ item.rank }}
+                {{ item.rank }}&nbsp; &nbsp;
               </el-text>
             </el-container>
 
             <el-container>
               <el-text> 功能： </el-text>
               <el-text v-for="(item, index) of dataList.data" :key="index">
-                {{ item.fun }}
+                {{ item.disasterReduction }}&nbsp; &nbsp;
               </el-text>
             </el-container>
           </el-header>
           <el-main>
-            <el-container style="width: 1200px; height: 300px">
+            <el-container
+              style="width: 1200px; height: 300px; overflow-x: auto"
+            >
               <!--              <div class="demo-image__lazy">-->
               <!--                <el-image v-for="url in urls" :key="url" :src="url" lazy />-->
               <!--              </div>-->
-              <el-image :src="imgUrl" />
-              <el-image :src="imgUrl" />
-              <el-image :src="imgUrl" />
+              <el-image
+                lazy
+                v-for="(item, index) of urlArr.arr"
+                :key="index"
+                style="flex-shrink: 0; width: 400px"
+                :src="`${VITE_API_PATH}/static/` + item"
+              />
             </el-container>
           </el-main>
         </el-container>
@@ -104,7 +110,7 @@
             <text class="ml-10 mt-4 big-title" style="position: absolute"
               >STAGEPRESENTATION</text
             >
-            <text to="/" style="position: absolute">阶段展示</text>
+            <text id="stage" to="/" style="position: absolute">阶段展示</text>
           </div>
         </div>
         <el-container>
@@ -148,14 +154,16 @@
 import { onMounted, reactive, ref, computed } from "vue";
 import { listCurrent, listPage, listProgress } from "@/api/new";
 import router from "@/router";
+import { useRouter } from "vue-router";
+const routerUse = useRouter();
 
 const { VITE_API_PATH } = import.meta.env;
 
 defineOptions({
   name: "Results"
 });
-const imgUrl =
-  "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg";
+// const imgUrl =
+//   "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg";
 
 const dataList = reactive({
   data: []
@@ -174,12 +182,27 @@ const form = reactive({
   releaseStatus: "1"
 });
 
+const urlArr = reactive({
+  arr: []
+});
+
 async function showNews() {
   loading.value = true;
   const { rows } = await listCurrent(form);
-  dataList.data = rows;
+  dataList.data = rows.map(item => {
+    item.achievementMaterialUrlArr = item.achievementMaterialUrl?.split("?");
+    item.achievementMaterialUrlArr?.forEach(item => {
+      urlArr.arr.push(item);
+    });
+    return {
+      ...item,
+      achievementMaterialUrlArr: item.achievementMaterialUrlArr
+    };
+  });
   loading.value = false;
-  console.log(dataList);
+  // console.log(dataList.data);
+  // console.log(urlArr.arr);
+  // progress.value = classifyNews("修复进度");
 }
 // const progress = ref([]);
 
@@ -221,10 +244,24 @@ function handleClick(item) {
   router.push({ name: "Page", params: { id: item.id } });
 }
 
+const scroll = () => {
+  const title_id = routerUse.currentRoute.value.fullPath.split("?")[1];
+  if (!title_id) {
+    return;
+  }
+  console.log(title_id);
+  if (title_id == "res") {
+    document.getElementById("res").scrollIntoView();
+  } else if (title_id == "stage") {
+    document.getElementById("stage").scrollIntoView();
+  }
+};
+
 onMounted(async () => {
   await showNews();
   await showPage();
   await showProgress();
+  scroll();
 });
 </script>
 
@@ -247,5 +284,13 @@ onMounted(async () => {
 .big-title {
   font-size: 44px;
   color: #ecf2ff;
+}
+
+.el-container::-webkit-scrollbar-track {
+  background: rgb(239 239 239);
+}
+
+.el-container::-webkit-scrollbar-thumb {
+  background: rgb(150 150 151);
 }
 </style>

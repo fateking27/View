@@ -31,11 +31,11 @@
                     <h4>&nbsp; 门户及项目介绍：</h4>
                     <div>
                       &nbsp; &nbsp; &nbsp;
-                      <router-link to="/detail">项目来源</router-link>
+                      <router-link to="/detail/1">项目来源</router-link>
                       &nbsp; &nbsp;
-                      <router-link to="/meaning">建设意义</router-link>&nbsp;
+                      <router-link to="/meaning/1">建设意义</router-link>&nbsp;
                       &nbsp; &nbsp;
-                      <router-link to="/expectation">预期成果</router-link
+                      <router-link to="/expectation/1">预期成果</router-link
                       >&nbsp; &nbsp;
                     </div>
                   </div>
@@ -43,11 +43,12 @@
                     <h4>&nbsp; 成果内容展示：</h4>
                     <div>
                       &nbsp; &nbsp; &nbsp;
-                      <router-link to="/fix">修复进度</router-link>&nbsp; &nbsp;
-                      <router-link to="/results">当前成果</router-link>&nbsp;
+                      <router-link to="/fix/1 ">修复进度</router-link>&nbsp;
                       &nbsp;
-                      <router-link to="/results">阶段展示</router-link>&nbsp;
-                      &nbsp;
+                      <router-link to="/results?res">当前成果</router-link
+                      >&nbsp; &nbsp;
+                      <router-link to="/results?stage">阶段展示</router-link
+                      >&nbsp; &nbsp;
                     </div>
                   </div>
                   <div class="service">
