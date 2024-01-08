@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center">
     <div class="bg-image bg-[url('/src/assets/images/news/new-bg.png')]">
       <div class="mt-10">
-        <div class="my-10 flex flex-row">
+        <div class="my-8 flex flex-row">
           <el-image src="/src/assets/images/title/arrow-left.png" />
           <div class="text-3xl ml-2" style="position: relative; width: 90%">
             <text class="ml-10 mt-4 big-title" style="position: absolute"
@@ -16,18 +16,26 @@
         <el-container>
           <el-aside width="450px">
             <div>
-              <el-carousel width="450px" height="250px">
+              <el-carousel width="450px" height="300px">
                 <el-carousel-item
                   v-for="(item, index) of workNews.slice(0, 4)"
                   :key="index"
                   @click="handleClick(item)"
                 >
-                  <el-image :src="item.coverMaterialUrl" />
+                  <el-image
+                    style="width: 450px; height: 250px"
+                    :src="item.coverMaterialUrl"
+                  />
+                  <div class="flex justify-center">
+                    <text style="font-size: 12px; text-align: center">{{
+                      item.name
+                    }}</text>
+                  </div>
                 </el-carousel-item>
               </el-carousel>
             </div>
           </el-aside>
-          <el-main class="ml-8 mt-5 mainStyle">
+          <el-main class="ml-8 mainStyle">
             <div
               class="flex justify-between items-center mb-2"
               style="position: relative"
@@ -41,7 +49,7 @@
             </div>
             <ul>
               <li
-                v-for="(item, index) of workNews.slice(4, 8)"
+                v-for="(item, index) of workNews.slice(5, 9)"
                 :key="index"
                 class="flex justify-between"
               >
@@ -69,25 +77,39 @@
         <el-container>
           <el-aside width="450px">
             <el-row class="image">
-              <el-image
+              <el-tooltip
                 v-for="(item, index) of viewNews.slice(0, 2)"
                 :key="index"
-                class="w-56 h-32 mr-2 mb-2"
-                :src="item.coverMaterialUrl"
-                @click="handleClick(item)"
-              />
+                class="box-item"
+                effect="dark"
+                :content="item.name"
+                placement="top-start"
+              >
+                <el-image
+                  class="w-56 h-32 mr-2 mb-2"
+                  :src="item.coverMaterialUrl"
+                  @click="handleClick(item)"
+                />
+              </el-tooltip>
             </el-row>
             <el-row class="image">
-              <el-image
-                v-for="(item, index) of workNews.slice(2, 4)"
+              <el-tooltip
+                v-for="(item, index) of viewNews.slice(3, 5)"
                 :key="index"
-                class="w-56 h-32 mr-2 mb-2"
-                :src="item.coverMaterialUrl"
-                @click="handleClick(item)"
-              />
+                class="box-item"
+                effect="dark"
+                :content="item.name"
+                placement="top-start"
+              >
+                <el-image
+                  class="w-56 h-32 mr-2 mb-2"
+                  :src="item.coverMaterialUrl"
+                  @click="handleClick(item)"
+                />
+              </el-tooltip>
             </el-row>
           </el-aside>
-          <el-main class="ml-8 mt-5 mainStyle">
+          <el-main class="ml-8 mainStyle">
             <div
               class="flex justify-between items-center mb-2"
               style="position: relative"
@@ -214,7 +236,7 @@ async function showNews() {
   console.log(dataList.data[1].coverMaterialUrl);
   // console.log(dataList.coverMaterialUrl);
   // console.log(dataList);
-  // console.log(workNews);
+  console.log(workNews);
 }
 
 function handleClick(item) {

@@ -78,7 +78,7 @@
             <el-container>
               <el-text> 功能： </el-text>
               <el-text v-for="(item, index) of dataList.data" :key="index">
-                {{ item.disasterReduction }}
+                {{ item.fun }}
               </el-text>
             </el-container>
           </el-header>
@@ -179,7 +179,7 @@ async function showNews() {
   const { rows } = await listCurrent(form);
   dataList.data = rows;
   loading.value = false;
-  // progress.value = classifyNews("修复进度");
+  console.log(dataList);
 }
 // const progress = ref([]);
 
