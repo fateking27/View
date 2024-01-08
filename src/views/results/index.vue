@@ -90,8 +90,8 @@
               <!--                <el-image v-for="url in urls" :key="url" :src="url" lazy />-->
               <!--              </div>-->
               <el-image
-                v-for="(item, index) of dataList.data[1]
-                  ?.achievementMaterialUrlArr"
+                lazy
+                v-for="(item, index) of urlArr.arr"
                 :key="index"
                 style="flex-shrink: 0; width: 400px"
                 :src="`${VITE_API_PATH}/static/` + item"
@@ -182,18 +182,26 @@ const form = reactive({
   releaseStatus: "1"
 });
 
+const urlArr = reactive({
+  arr: []
+});
+
 async function showNews() {
   loading.value = true;
   const { rows } = await listCurrent(form);
   dataList.data = rows.map(item => {
     item.achievementMaterialUrlArr = item.achievementMaterialUrl?.split("?");
+    item.achievementMaterialUrlArr?.forEach(item => {
+      urlArr.arr.push(item);
+    });
     return {
       ...item,
       achievementMaterialUrlArr: item.achievementMaterialUrlArr
     };
   });
   loading.value = false;
-  console.log(dataList.data);
+  // console.log(dataList.data);
+  // console.log(urlArr.arr);
   // progress.value = classifyNews("修复进度");
 }
 // const progress = ref([]);

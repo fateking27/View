@@ -42,16 +42,20 @@ export const detailResult = id => {
 
 /**查询当前成果**/
 export const listCurrent = (data?: object) => {
-  return http.request<Result>("get", "/business/project_res/released", {
-    params: data
-  });
+  return http.request<Result>(
+    "get",
+    "/business/project_res/released/achievement",
+    {
+      params: data
+    }
+  );
 };
 
 /**查询阶段展示**/
 export const listPage = (data?: object) => {
   return http.request<Result>(
     "get",
-    "/business/project_res/list_stage_display",
+    "/business/project_res/released/stage_display",
     {
       params: data
     }
@@ -66,7 +70,7 @@ export const getPage = id => {
 export const listProgress = (data?: object) => {
   return http.request<Result>(
     "get",
-    "/business/project_res/list_repair_progress",
+    "/business/project_res/released/repair_progress",
     {
       params: data
     }
