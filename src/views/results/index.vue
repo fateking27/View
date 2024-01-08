@@ -78,7 +78,7 @@
             <el-container>
               <el-text> 功能： </el-text>
               <el-text v-for="(item, index) of dataList.data" :key="index">
-                {{ item.disasterReduction }}&nbsp; &nbsp;
+                {{ item.fun }}&nbsp; &nbsp;
               </el-text>
             </el-container>
           </el-header>
