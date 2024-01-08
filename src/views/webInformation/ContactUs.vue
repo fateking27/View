@@ -45,11 +45,13 @@
                   <tbody>
                     <tr>
                       <td class="border">主办单位：</td>
-                      <td class="border">广东自然资源厅</td>
+                      <td class="border">
+                        中国电建集团昆明勘测设计研究院有限公司
+                      </td>
                     </tr>
                     <tr>
                       <td class="border">地址：</td>
-                      <td class="border">广州市体育东路160号</td>
+                      <td class="border">云南昆明人民东路115号</td>
                     </tr>
                     <tr>
                       <td class="border">邮编：</td>
@@ -57,11 +59,13 @@
                     </tr>
                     <tr>
                       <td class="border">网 址：</td>
-                      <td class="border">nr.gd.gov.cn</td>
+                      <td class="border">xxxxx</td>
                     </tr>
                     <tr>
                       <td class="border">电 话：</td>
-                      <td class="border">020-38817079</td>
+                      <td class="border">
+                        0871-63062050(总经理工作部) 0871-63062729(市场开发部)
+                      </td>
                     </tr>
                   </tbody>
                 </table>

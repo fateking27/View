@@ -42,7 +42,7 @@ export const detailResult = id => {
 
 /**查询当前成果**/
 export const listCurrent = (data?: object) => {
-  return http.request<Result>("get", "/business/project_res/list_achievement", {
+  return http.request<Result>("get", "/business/project_res/released", {
     params: data
   });
 };
