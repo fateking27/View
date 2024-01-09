@@ -28,7 +28,10 @@
             <tr v-for="item in dataList.data.slice(0, 2)" :key="item.id">
               <td class="border">
                 <!-- Indiana -->
-                <el-image style="width: 100px; height: 100px" :src="item.url" />
+                <el-image
+                  style="width: 100px; height: 100px"
+                  :src="`${VITE_API_PATH}/static/` + item.url"
+                />
               </td>
               <td class="border">
                 <!-- Indianapolis -->
@@ -67,6 +70,9 @@ import { mapServiceList, mapDitail } from "@/api/service";
 defineOptions({
   name: "Service"
 });
+
+const { VITE_API_PATH } = import.meta.env;
+
 const dataList = reactive({
   data: []
 });

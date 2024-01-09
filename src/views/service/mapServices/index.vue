@@ -24,7 +24,10 @@
           <tbody>
             <tr v-for="item in dataList.data" :key="item.id">
               <td class="border">
-                <el-image style="width: 100px; height: 100px" :src="item.url" />
+                <el-image
+                  style="width: 100px; height: 100px"
+                  :src="`${VITE_API_PATH}/static/` + item.url"
+                />
               </td>
               <td class="border">
                 {{ item.title }}
@@ -56,6 +59,8 @@ defineOptions({
 const dataList = reactive({
   data: []
 });
+
+const { VITE_API_PATH } = import.meta.env;
 
 const onClick = async id => {
   await mapDitail(id);
