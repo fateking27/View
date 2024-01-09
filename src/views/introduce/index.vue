@@ -194,4 +194,12 @@ onMounted(async () => {
   font-size: 44px;
   color: #ecf2ff;
 }
+
+.el-main::-webkit-scrollbar-track {
+  background: rgb(255 255 255);
+}
+
+.el-main::-webkit-scrollbar-thumb {
+  background: rgb(233 233 233);
+}
 </style>
