@@ -60,9 +60,10 @@
           </div>
         </div>
         <el-container>
-          <el-tabs v-model="activeName" class="demo-tabs" tab-position="top">
+          <el-tabs v-model="activeName" class="demo-tabs" tab-position="left">
             <el-tab-pane
-              v-for="(item, index) in mdlData"
+              style="width: 1200px; height: 400px"
+              v-for="(item, index) in dataList.data"
               :key="index"
               :label="item.module"
               :name="item.module"
@@ -70,40 +71,34 @@
               <el-header style="margin-left: -20px">
                 <el-container>
                   <el-text>现状： </el-text>
-                  <el-text>
-                    {{
-                      item.children ? item.children[0].ecologicalStatus : ""
-                    }}&nbsp; &nbsp;
+                  <el-text v-for="(i, v) in item.children" :key="v">
+                    {{ i.ecologicalStatus }}&nbsp; &nbsp;
                   </el-text>
                 </el-container>
 
                 <el-container>
                   <el-text> 分级： </el-text>
-                  <el-text>
-                    {{ item.children ? item.children[0].rank : "" }}&nbsp;
-                    &nbsp;
+                  <el-text v-for="(i, v) in item.children" :key="v">
+                    {{ i.rank }}&nbsp; &nbsp;
                   </el-text>
                 </el-container>
 
                 <el-container>
                   <el-text> 功能： </el-text>
-                  <el-text>
-                    {{ item.children ? item.children[0].fun : "" }}&nbsp; &nbsp;
+                  <el-text v-for="(i, v) in item.children" :key="v">
+                    {{ i.fun }}&nbsp; &nbsp;
                   </el-text>
                 </el-container>
               </el-header>
               <el-main style="margin-left: -20px">
                 <el-container
-                  v-for="i in item.children"
-                  :key="i.id"
                   style="width: 1200px; height: 300px; overflow-x: auto"
                 >
                   <el-image
-                    lazy
-                    v-for="(v, key) in i.achievementMaterialUrlArr"
-                    :key="key"
+                    v-for="(i, v) in item.achievementMaterialUrlArr"
+                    :key="v"
                     style="flex-shrink: 0; width: 400px"
-                    :src="`${VITE_API_PATH}/static/` + v"
+                    :src="`${VITE_API_PATH}/static/` + i"
                   />
                 </el-container>
               </el-main>
@@ -166,7 +161,7 @@ import { onMounted, reactive, ref, computed } from "vue";
 import { listCurrent, listPage, listProgress, modulesResults } from "@/api/new";
 import router from "@/router";
 import { useRouter } from "vue-router";
-const activeName = ref("仿岩质潮间带");
+const activeName = ref();
 
 const routerUse = useRouter();
 
@@ -213,15 +208,36 @@ async function showNews() {
     };
   });
   loading.value = false;
-  // console.log(dataList.data);
-  // console.log(urlArr.arr);
-  // progress.value = classifyNews("修复进度");
-}
-// const progress = ref([]);
 
-// const classifyNews = (newType) => {
-//   return dataList.data.filter((news) => news.type=== newType);
-// };
+  const obj = {};
+  dataList.data.forEach(item => {
+    const { module } = item;
+    if (!obj[module]) {
+      obj[module] = {
+        module,
+        children: []
+      };
+    }
+
+    obj[module].children.push(item);
+  });
+  dataList.data = Object.values(obj);
+  dataList.data = dataList.data.map(item => {
+    const urlArr = [];
+    item.children.forEach(item => {
+      item.achievementMaterialUrlArr.forEach(item => {
+        urlArr.push(item);
+      });
+    });
+    return {
+      ...item,
+      achievementMaterialUrlArr: urlArr
+    };
+  });
+
+  console.log(dataList.data);
+  activeName.value = dataList.data[0].module;
+}
 
 const mdlData = ref();
 const modulesData = async () => {
@@ -247,7 +263,6 @@ const modulesData = async () => {
   });
   console.log(arrObj);
   mdlData.value = arrObj;
-  // console.log(mdlData.value);
 };
 
 async function showPage() {
