@@ -60,44 +60,56 @@
           </div>
         </div>
         <el-container>
-          <el-header>
-            <el-container>
-              <text>现状： </text>
-              <text v-for="(item, index) of dataList.data" :key="index">
-                {{ item.ecologicalStatus }}&nbsp; &nbsp;
-              </text>
-            </el-container>
-
-            <el-container>
-              <text> 分级： </text>
-              <text v-for="(item, index) of dataList.data" :key="index">
-                {{ item.rank }}&nbsp; &nbsp;
-              </text>
-            </el-container>
-
-            <el-container>
-              <text> 功能： </text>
-              <text v-for="(item, index) of dataList.data" :key="index">
-                {{ item.fun }}&nbsp; &nbsp;
-              </text>
-            </el-container>
-          </el-header>
-          <el-main>
-            <el-container
-              style="width: 1200px; height: 300px; overflow-x: auto"
+          <el-tabs v-model="activeName" class="demo-tabs" tab-position="top">
+            <el-tab-pane
+              style="width: 1200px; height: 400px; line-height: 27px"
+              v-for="(item, index) in dataList.data"
+              :key="index"
+              :label="item.module"
+              :name="item.module"
             >
-              <!--              <div class="demo-image__lazy">-->
-              <!--                <el-image v-for="url in urls" :key="url" :src="url" lazy />-->
-              <!--              </div>-->
-              <el-image
-                lazy
-                v-for="(item, index) of urlArr.arr"
-                :key="index"
-                style="flex-shrink: 0; width: 400px"
-                :src="`${VITE_API_PATH}/static/` + item"
-              />
-            </el-container>
-          </el-main>
+              <el-header style="margin-bottom: 15px; margin-left: -20px">
+                <el-container style="padding-bottom: 5px">
+                  <el-text style="font-size: 17px; font-weight: 600"
+                    >现状：
+                  </el-text>
+                  <el-text v-for="(i, v) in item.children" :key="v">
+                    {{ i.ecologicalStatus }}&nbsp; &nbsp;
+                  </el-text>
+                </el-container>
+
+                <el-container style="padding-bottom: 5px">
+                  <el-text style="font-size: 17px; font-weight: 600">
+                    分级：
+                  </el-text>
+                  <el-text v-for="(i, v) in item.children" :key="v">
+                    {{ i.rank }}&nbsp; &nbsp;
+                  </el-text>
+                </el-container>
+
+                <el-container style="padding-bottom: 5px">
+                  <el-text style="font-size: 17px; font-weight: 600">
+                    功能：
+                  </el-text>
+                  <el-text v-for="(i, v) in item.children" :key="v">
+                    {{ i.fun }}&nbsp; &nbsp;
+                  </el-text>
+                </el-container>
+              </el-header>
+              <el-main style="margin-left: -20px">
+                <el-container
+                  style="width: 100%; height: 300px; overflow-x: auto"
+                >
+                  <el-image
+                    v-for="(i, v) in item.achievementMaterialUrlArr"
+                    :key="v"
+                    style="flex-shrink: 0; width: 33.3%"
+                    :src="`${VITE_API_PATH}/static/` + i"
+                  />
+                </el-container>
+              </el-main>
+            </el-tab-pane>
+          </el-tabs>
         </el-container>
       </div>
     </div>
@@ -135,10 +147,7 @@
                   :key="index"
                   @click="handleClick(item)"
                 >
-                  <el-image
-                    class="cursor-pointer"
-                    :src="item.coverMaterialUrl"
-                  />
+                  <el-image :src="item.coverMaterialUrl" />
                   <div>
                     <text>{{ item.stageName }}</text>
                   </div>
@@ -155,9 +164,11 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, computed } from "vue";
-import { listCurrent, listPage, listProgress } from "@/api/new";
+import { listCurrent, listPage, listProgress, modulesResults } from "@/api/new";
 import router from "@/router";
 import { useRouter } from "vue-router";
+const activeName = ref();
+
 const routerUse = useRouter();
 
 const { VITE_API_PATH } = import.meta.env;
@@ -203,15 +214,62 @@ async function showNews() {
     };
   });
   loading.value = false;
-  // console.log(dataList.data);
-  // console.log(urlArr.arr);
-  // progress.value = classifyNews("修复进度");
-}
-// const progress = ref([]);
 
-// const classifyNews = (newType) => {
-//   return dataList.data.filter((news) => news.type=== newType);
-// };
+  const obj = {};
+  dataList.data.forEach(item => {
+    const { module } = item;
+    if (!obj[module]) {
+      obj[module] = {
+        module,
+        children: []
+      };
+    }
+
+    obj[module].children.push(item);
+  });
+  dataList.data = Object.values(obj);
+  dataList.data = dataList.data.map(item => {
+    const urlArr = [];
+    item.children.forEach(item => {
+      item.achievementMaterialUrlArr.forEach(item => {
+        urlArr.push(item);
+      });
+    });
+    return {
+      ...item,
+      achievementMaterialUrlArr: urlArr
+    };
+  });
+
+  console.log(dataList.data);
+  activeName.value = dataList.data[0].module;
+}
+
+const mdlData = ref();
+const modulesData = async () => {
+  const res = await modulesResults();
+  console.log(res.data);
+
+  let arrObj = [];
+  for (const key in res.data) {
+    const i = { module: key, children: res.data[key] };
+    arrObj.push(i);
+  }
+  arrObj = arrObj.map(item => {
+    item.children = item.children?.map(item => {
+      item.achievementMaterialUrlArr = item.achievementMaterialUrl?.split("?");
+      return {
+        ...item,
+        achievementMaterialUrlArr: item.achievementMaterialUrlArr
+      };
+    });
+    return {
+      ...item
+    };
+  });
+  console.log(arrObj);
+  mdlData.value = arrObj;
+};
 
 async function showPage() {
   loading.value = true;
@@ -265,6 +323,7 @@ onMounted(async () => {
   await showPage();
   await showProgress();
   scroll();
+  modulesData();
 });
 </script>
 
