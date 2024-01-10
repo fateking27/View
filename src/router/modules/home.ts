@@ -48,7 +48,7 @@ export default {
       }
     },
     {
-      path: "/searchView/:keyWord",
+      path: "/searchView/:keyWord?",
       name: "Search",
       component: () => import("@/views/webInformation/searchView.vue"),
       meta: {
