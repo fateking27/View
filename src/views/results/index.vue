@@ -60,31 +60,37 @@
           </div>
         </div>
         <el-container>
-          <el-tabs v-model="activeName" class="demo-tabs" tab-position="left">
+          <el-tabs v-model="activeName" class="demo-tabs" tab-position="top">
             <el-tab-pane
-              style="width: 1200px; height: 400px"
+              style="width: 1200px; height: 400px; line-height: 27px"
               v-for="(item, index) in dataList.data"
               :key="index"
               :label="item.module"
               :name="item.module"
             >
-              <el-header style="margin-left: -20px">
-                <el-container>
-                  <el-text>现状： </el-text>
+              <el-header style="margin-bottom: 15px; margin-left: -20px">
+                <el-container style="padding-bottom: 5px">
+                  <el-text style="font-size: 17px; font-weight: 600"
+                    >现状：
+                  </el-text>
                   <el-text v-for="(i, v) in item.children" :key="v">
                     {{ i.ecologicalStatus }}&nbsp; &nbsp;
                   </el-text>
                 </el-container>
 
-                <el-container>
-                  <el-text> 分级： </el-text>
+                <el-container style="padding-bottom: 5px">
+                  <el-text style="font-size: 17px; font-weight: 600">
+                    分级：
+                  </el-text>
                   <el-text v-for="(i, v) in item.children" :key="v">
                     {{ i.rank }}&nbsp; &nbsp;
                   </el-text>
                 </el-container>
 
-                <el-container>
-                  <el-text> 功能： </el-text>
+                <el-container style="padding-bottom: 5px">
+                  <el-text style="font-size: 17px; font-weight: 600">
+                    功能：
+                  </el-text>
                   <el-text v-for="(i, v) in item.children" :key="v">
                     {{ i.fun }}&nbsp; &nbsp;
                   </el-text>
@@ -92,12 +98,12 @@
               </el-header>
               <el-main style="margin-left: -20px">
                 <el-container
-                  style="width: 1200px; height: 300px; overflow-x: auto"
+                  style="width: 100%; height: 300px; overflow-x: auto"
                 >
                   <el-image
                     v-for="(i, v) in item.achievementMaterialUrlArr"
                     :key="v"
-                    style="flex-shrink: 0; width: 400px"
+                    style="flex-shrink: 0; width: 33.3%"
                     :src="`${VITE_API_PATH}/static/` + i"
                   />
                 </el-container>
