@@ -22,9 +22,11 @@
             <el-image
               width="450px"
               height="250px"
+              class="cursor-pointer"
               v-for="(item, index) of source"
               :key="index"
               :src="item.coverMaterialUrl"
+              @click="handleClick(item)"
             />
           </el-aside>
           <el-main class="ml-8">
@@ -51,7 +53,7 @@
             <router-link
               v-for="(item, index) of meaning"
               :key="index"
-              :to="{ name: 'Meaning', params: { id: item.id } }"
+              :to="{ name: 'Detail', params: { id: item.id } }"
               style="position: absolute"
               >建设意义</router-link
             >
@@ -60,11 +62,13 @@
         <el-container>
           <el-aside width="450px">
             <el-image
+              class="cursor-pointer"
               width="450px"
               height="250px"
               v-for="(item, index) of meaning"
               :key="index"
               :src="item.coverMaterialUrl"
+              @click="handleClick(item)"
             />
           </el-aside>
           <el-main class="ml-8 no-padding">
@@ -88,7 +92,7 @@
             <router-link
               v-for="(item, index) of expectation"
               :key="index"
-              :to="{ name: 'Expectation', params: { id: item.id } }"
+              :to="{ name: 'Detail', params: { id: item.id } }"
               class="ml-10"
               style="position: absolute"
               >预期成果</router-link
@@ -108,11 +112,13 @@
           </el-main>
           <el-aside width="450px">
             <el-image
+              class="cursor-pointer"
               width="450px"
               height="250px"
               v-for="(item, index) of expectation"
               :key="index"
               :src="item.coverMaterialUrl"
+              @click="handleClick(item)"
             />
           </el-aside>
         </el-container>
@@ -124,6 +130,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from "vue";
 import { listIntroduce } from "@/api/new";
+import router from "@/router";
 
 const { VITE_API_PATH } = import.meta.env;
 defineOptions({
@@ -163,6 +170,10 @@ async function showNews() {
 const classifyNews = newType => {
   return dataList.data.filter(news => news.type === newType);
 };
+
+function handleClick(item) {
+  router.push({ name: "Detail", params: { id: item.id } });
+}
 
 onMounted(async () => {
   await showNews();

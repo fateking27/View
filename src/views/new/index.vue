@@ -23,6 +23,7 @@
                   @click="handleClick(item)"
                 >
                   <el-image
+                    class="cursor-pointer"
                     style="width: 450px; height: 250px"
                     :src="item.coverMaterialUrl"
                   />
@@ -35,7 +36,7 @@
               </el-carousel>
             </div>
           </el-aside>
-          <el-main class="ml-8 mainStyle">
+          <el-main class="ml-8">
             <div
               class="flex justify-between items-center mb-2"
               style="position: relative"
@@ -53,14 +54,25 @@
                 :key="index"
                 class="flex justify-between"
               >
-                <router-link
-                  :to="{ name: 'Information', params: { id: item.id } }"
-                  class="mr-12 mb-2 newsTitle"
-                  >{{ item.name }}</router-link
+                <el-tooltip
+                  class="box-item"
+                  effect="dark"
+                  :content="item.name"
+                  placement="top-start"
+                  show-after="500"
                 >
+                  <router-link
+                    :to="{ name: 'Information', params: { id: item.id } }"
+                    class="mr-12 mb-2 newsTitle"
+                    >{{
+                      item.name.slice(0, 25) +
+                      (item.name.length > 25 ? "..." : "")
+                    }}</router-link
+                  >
+                </el-tooltip>
                 <div class="flex items-center">
                   <span
-                    class="mr-8 mb-1 bg-red-200 text-red-400 text-center p-1 text-xs"
+                    class="mr-6 mb-1 bg-red-200 text-red-400 text-center p-1 text-xs"
                     >{{ item.mark }}</span
                   >
                   <span>{{
@@ -84,9 +96,10 @@
                 effect="dark"
                 :content="item.name"
                 placement="top-start"
+                show-after="500"
               >
                 <el-image
-                  class="w-56 h-32 mr-2 mb-2"
+                  class="w-56 h-32 mr-2 mb-2 cursor-pointer"
                   :src="item.coverMaterialUrl"
                   @click="handleClick(item)"
                 />
@@ -100,16 +113,17 @@
                 effect="dark"
                 :content="item.name"
                 placement="top-start"
+                show-after="500"
               >
                 <el-image
-                  class="w-56 h-32 mr-2 mb-2"
+                  class="w-56 h-32 mr-2 mb-2 cursor-pointer"
                   :src="item.coverMaterialUrl"
                   @click="handleClick(item)"
                 />
               </el-tooltip>
             </el-row>
           </el-aside>
-          <el-main class="ml-8 mainStyle">
+          <el-main class="ml-8">
             <div
               class="flex justify-between items-center mb-2"
               style="position: relative"
@@ -127,14 +141,25 @@
                 :key="index"
                 class="flex justify-between"
               >
-                <router-link
-                  :to="{ name: 'Information', params: { id: item.id } }"
-                  class="mr-12 mb-2 newsTitle"
-                  >{{ item.name }}</router-link
+                <el-tooltip
+                  class="box-item"
+                  effect="dark"
+                  :content="item.name"
+                  placement="top-start"
+                  show-after="500"
                 >
+                  <router-link
+                    :to="{ name: 'Information', params: { id: item.id } }"
+                    class="mr-12 mb-2 newsTitle"
+                    >{{
+                      item.name.slice(0, 25) +
+                      (item.name.length > 25 ? "..." : "")
+                    }}</router-link
+                  >
+                </el-tooltip>
                 <div class="flex items-center">
                   <span
-                    class="mr-8 mb-1 bg-red-200 text-red-400 text-center p-1 text-xs"
+                    class="mr-6 mb-1 bg-red-200 text-red-400 text-center p-1 text-xs"
                     >{{ item.mark }}</span
                   >
                   <span>{{
@@ -169,11 +194,22 @@
                 :key="index"
                 class="flex justify-between"
               >
-                <router-link
-                  :to="{ name: 'Information', params: { id: item.id } }"
-                  class="mr-12 mb-2 newsTitle"
-                  >{{ item.name }}</router-link
+                <el-tooltip
+                  class="box-item"
+                  effect="dark"
+                  :content="item.name"
+                  placement="top-start"
+                  show-after="500"
                 >
+                  <router-link
+                    :to="{ name: 'Information', params: { id: item.id } }"
+                    class="mr-12 mb-2 newsTitle"
+                    >{{
+                      item.name.slice(0, 25) +
+                      (item.name.length > 25 ? "..." : "")
+                    }}</router-link
+                  >
+                </el-tooltip>
                 <div class="flex items-center">
                   <span
                     class="mr-8 mb-1 bg-red-200 text-red-400 text-center p-1 text-xs"
@@ -193,7 +229,12 @@
                 :key="index"
                 @click="handleClick(item)"
               >
-                <el-image :src="item.coverMaterialUrl" />
+                <el-image class="cursor-pointer" :src="item.coverMaterialUrl" />
+                <div class="flex justify-center">
+                  <text style="font-size: 12px; text-align: center">{{
+                    item.name
+                  }}</text>
+                </div>
               </el-carousel-item>
             </el-carousel>
           </el-aside>
@@ -263,7 +304,6 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 100%;
   background-position: center;
   background-size: cover;
@@ -281,9 +321,5 @@ onMounted(async () => {
 
 .image {
   flex-wrap: nowrap;
-}
-
-.mainStyle {
-  min-width: 850px;
 }
 </style>

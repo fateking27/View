@@ -12,7 +12,12 @@
       <el-menu-item index="/results">成果内容展示</el-menu-item>
       <el-menu-item index="/service">对外服务</el-menu-item>
     </el-menu>
-    <el-input class="search" placeholder="请输入要搜索的内容" />
+    <el-input
+      class="search"
+      placeholder="请输入要搜索的内容"
+      v-model="keyWord.key"
+    />
+    <el-button @click="handleClick(keyWord)"> 搜索 </el-button>
     <!--    <el-button class="login-register" type="primary" round plain @click="login"-->
     <!--      >登录 / 注册</el-button-->
     <!--    >-->
@@ -26,62 +31,58 @@
   </el-container>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, watch, computed } from "vue";
-import { ElHeader, ElMenu, ElMenuItem, ElInput } from "element-plus";
+2024-01-10 17:22:24
+
+<script lang="ts" setup>
+import { ref, watch, computed, reactive } from "vue";
 import { useRoute } from "vue-router";
+import { ElHeader, ElMenu, ElMenuItem, ElInput } from "element-plus";
+import router from "@/router";
 
-export default defineComponent({
-  components: {
-    ElHeader,
-    ElMenu,
-    ElMenuItem,
-    ElInput
-  },
-  setup() {
-    const route = useRoute();
-    const active = ref(route.path);
+const route = useRoute();
+const active = ref(route.path);
 
-    watch(
-      () => route.path,
-      value => {
-        active.value = value;
-      }
-    );
+watch(
+  () => route.path,
+  value => {
+    active.value = value;
+  }
+);
 
-    const activeIndex = computed(() => {
-      const { name } = route;
-      switch (name) {
-        case "New":
-        case "Information":
-        case "Dynamic":
-        case "Progress":
-          return "/new";
-        case "Introduce":
-        case "Detail":
-        case "Meaning":
-        case "Expectation":
-          return "/introduce";
-        case "Results":
-        case "Fix":
-        case "Current":
-        case "Page":
-          return "/results";
-        default:
-          return "/service";
-      }
-    });
-
-    watch(activeIndex, value => {
-      active.value = value;
-    });
-
-    return {
-      active,
-      activeIndex
-    };
+const activeIndex = computed(() => {
+  const { name } = route;
+  switch (name) {
+    case "New":
+    case "Information":
+    case "Dynamic":
+    case "Progress":
+      return "/new";
+    case "Introduce":
+    case "Detail":
+      // case "Meaning":
+      // case "Expectation":
+      return "/introduce";
+    case "Results":
+    case "Fix":
+    case "Current":
+    case "Page":
+      return "/results";
+    default:
+      return "/service";
   }
 });
+
+watch(activeIndex, value => {
+  active.value = value;
+});
+
+const keyWord = reactive({
+  key: undefined
+});
+
+function handleClick(keyWord) {
+  router.push({ name: "Search", params: { keyWord: keyWord.key } });
+}
 </script>
 
 <style scoped>

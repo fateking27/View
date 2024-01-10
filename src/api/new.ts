@@ -7,10 +7,6 @@ export const listNew = (data?: object) => {
   });
 };
 
-export const getNew = id => {
-  return http.request<Result>("get", `/business/news_info/${id}`);
-};
-
 /**查询新闻信息详情统计浏览量**/
 export const getBrowse = id => {
   return http.request<Result>("get", `/business/news_info/ditail/${id}`);
@@ -62,10 +58,6 @@ export const listPage = (data?: object) => {
   );
 };
 
-export const getPage = id => {
-  return http.request<Result>("get", `/business/project_res/ditail/${id}`);
-};
-
 /**查询修复进度**/
 export const listProgress = (data?: object) => {
   return http.request<Result>(
@@ -76,6 +68,9 @@ export const listProgress = (data?: object) => {
     }
   );
 };
-export const getIntro = id => {
-  return http.request<Result>("get", `/business/project_intro/ditail/${id}`);
+/**网站搜索**/
+export const onSearch = (data?: object) => {
+  return http.request<Result>("get", "/business/overall_situation", {
+    params: data
+  });
 };

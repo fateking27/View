@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center">
-    <div class="mt-20">
+    <div class="mt-6">
       <div class="mb-10 flex flex-row mt-20">
         <el-image src="/src/assets/images/title/arrow-left.png" />
 

@@ -7,7 +7,7 @@
           <el-breadcrumb-item :to="{ path: '/introduce' }"
             >门户及项目介绍</el-breadcrumb-item
           >
-          <el-breadcrumb-item>预期成果</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ newsData.data.type }}</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
       <el-main>

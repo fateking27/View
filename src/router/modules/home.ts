@@ -48,6 +48,15 @@ export default {
       }
     },
     {
+      path: "/searchView/:keyWord",
+      name: "Search",
+      component: () => import("@/views/webInformation/searchView.vue"),
+      meta: {
+        title: "内容查询",
+        showLink: false
+      }
+    },
+    {
       path: "/introduce",
       name: "Introduce",
       component: () => import("@/views/introduce/index.vue"),

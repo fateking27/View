@@ -62,24 +62,24 @@
         <el-container>
           <el-header>
             <el-container>
-              <el-text>现状： </el-text>
-              <el-text v-for="(item, index) of dataList.data" :key="index">
+              <text>现状： </text>
+              <text v-for="(item, index) of dataList.data" :key="index">
                 {{ item.ecologicalStatus }}&nbsp; &nbsp;
-              </el-text>
+              </text>
             </el-container>
 
             <el-container>
-              <el-text> 分级： </el-text>
-              <el-text v-for="(item, index) of dataList.data" :key="index">
+              <text> 分级： </text>
+              <text v-for="(item, index) of dataList.data" :key="index">
                 {{ item.rank }}&nbsp; &nbsp;
-              </el-text>
+              </text>
             </el-container>
 
             <el-container>
-              <el-text> 功能： </el-text>
-              <el-text v-for="(item, index) of dataList.data" :key="index">
+              <text> 功能： </text>
+              <text v-for="(item, index) of dataList.data" :key="index">
                 {{ item.fun }}&nbsp; &nbsp;
-              </el-text>
+              </text>
             </el-container>
           </el-header>
           <el-main>
@@ -135,7 +135,10 @@
                   :key="index"
                   @click="handleClick(item)"
                 >
-                  <el-image :src="item.coverMaterialUrl" />
+                  <el-image
+                    class="cursor-pointer"
+                    :src="item.coverMaterialUrl"
+                  />
                   <div>
                     <text>{{ item.stageName }}</text>
                   </div>

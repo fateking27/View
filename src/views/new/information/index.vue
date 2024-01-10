@@ -29,7 +29,7 @@
             }}</el-text>
             <el-text style="margin-left: 20px">来源：</el-text>
             <el-text>{{ newsData.data.source }}</el-text>
-            <el-text style="margin-left: 600px">A字体</el-text>
+            <el-text class="vc-ml-auto">A字体</el-text>
             <div class="ml-5">
               <el-button size="small" @click="handleClickLarge">大</el-button>
               <el-button size="small" @click="handleClickMedium">中</el-button>
@@ -84,7 +84,6 @@ const handleClickSmall = () => {
 onMounted(async () => {
   const newsId = route.params.id;
   const response = await getBrowse(newsId);
-  // await getBrowse(newsId);
   newsData.data = response.data;
   console.log(newsData);
 });

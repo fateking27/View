@@ -72,6 +72,10 @@
 <script lang="ts" setup>
 // import { reactive } from "vue";
 
+// function handleClick(item) {
+//   router.push({ name: "Detail", params: { id: item.id } });
+// }
+
 defineOptions({
   name: "siteMap"
 });

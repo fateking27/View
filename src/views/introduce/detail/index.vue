@@ -7,7 +7,7 @@
           <el-breadcrumb-item :to="{ path: '/introduce' }"
             >门户及项目介绍</el-breadcrumb-item
           >
-          <el-breadcrumb-item>项目来源</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ newsData.data.type }}</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
       <el-main>
@@ -20,7 +20,7 @@
             <el-text>{{ newsData.data.releaseTime }}</el-text>
             <el-text style="margin-left: 20px">来源：</el-text>
             <el-text>{{ newsData.data.source }}</el-text>
-            <el-text style="margin-left: 600px">A字体</el-text>
+            <el-text class="vc-ml-auto">A字体</el-text>
             <div class="ml-5">
               <el-button size="small" @click="handleClickLarge">大</el-button>
               <el-button size="small" @click="handleClickMedium">中</el-button>
