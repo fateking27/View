@@ -57,6 +57,15 @@ export default {
       }
     },
     {
+      path: "/searchPage",
+      name: "SearchPage",
+      component: () => import("@/views/searchPage/index.vue"),
+      meta: {
+        title: "",
+        showLink: false
+      }
+    },
+    {
       path: "/introduce",
       name: "Introduce",
       component: () => import("@/views/introduce/index.vue"),
