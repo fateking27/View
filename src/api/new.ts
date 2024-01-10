@@ -35,6 +35,10 @@ export const listResults = (data?: object) => {
   });
 };
 
+export const modulesResults = () => {
+  return http.request<Result>("get", "/business/project_res/tree_achievement");
+};
+
 /**查询修复进度详情统计浏览量**/
 export const detailResult = id => {
   return http.request<Result>("get", `/business/project_res/ditail/${id}`);

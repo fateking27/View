@@ -60,44 +60,55 @@
           </div>
         </div>
         <el-container>
-          <el-header>
-            <el-container>
-              <el-text>现状： </el-text>
-              <el-text v-for="(item, index) of dataList.data" :key="index">
-                {{ item.ecologicalStatus }}&nbsp; &nbsp;
-              </el-text>
-            </el-container>
-
-            <el-container>
-              <el-text> 分级： </el-text>
-              <el-text v-for="(item, index) of dataList.data" :key="index">
-                {{ item.rank }}&nbsp; &nbsp;
-              </el-text>
-            </el-container>
-
-            <el-container>
-              <el-text> 功能： </el-text>
-              <el-text v-for="(item, index) of dataList.data" :key="index">
-                {{ item.fun }}&nbsp; &nbsp;
-              </el-text>
-            </el-container>
-          </el-header>
-          <el-main>
-            <el-container
-              style="width: 1200px; height: 300px; overflow-x: auto"
+          <el-tabs v-model="activeName" class="demo-tabs" tab-position="top">
+            <el-tab-pane
+              v-for="(item, index) in mdlData"
+              :key="index"
+              :label="item.module"
+              :name="item.module"
             >
-              <!--              <div class="demo-image__lazy">-->
-              <!--                <el-image v-for="url in urls" :key="url" :src="url" lazy />-->
-              <!--              </div>-->
-              <el-image
-                lazy
-                v-for="(item, index) of urlArr.arr"
-                :key="index"
-                style="flex-shrink: 0; width: 400px"
-                :src="`${VITE_API_PATH}/static/` + item"
-              />
-            </el-container>
-          </el-main>
+              <el-header style="margin-left: -20px">
+                <el-container>
+                  <el-text>现状： </el-text>
+                  <el-text>
+                    {{
+                      item.children ? item.children[0].ecologicalStatus : ""
+                    }}&nbsp; &nbsp;
+                  </el-text>
+                </el-container>
+
+                <el-container>
+                  <el-text> 分级： </el-text>
+                  <el-text>
+                    {{ item.children ? item.children[0].rank : "" }}&nbsp;
+                    &nbsp;
+                  </el-text>
+                </el-container>
+
+                <el-container>
+                  <el-text> 功能： </el-text>
+                  <el-text>
+                    {{ item.children ? item.children[0].fun : "" }}&nbsp; &nbsp;
+                  </el-text>
+                </el-container>
+              </el-header>
+              <el-main style="margin-left: -20px">
+                <el-container
+                  v-for="i in item.children"
+                  :key="i.id"
+                  style="width: 1200px; height: 300px; overflow-x: auto"
+                >
+                  <el-image
+                    lazy
+                    v-for="(v, key) in i.achievementMaterialUrlArr"
+                    :key="key"
+                    style="flex-shrink: 0; width: 400px"
+                    :src="`${VITE_API_PATH}/static/` + v"
+                  />
+                </el-container>
+              </el-main>
+            </el-tab-pane>
+          </el-tabs>
         </el-container>
       </div>
     </div>
@@ -152,9 +163,11 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, computed } from "vue";
-import { listCurrent, listPage, listProgress } from "@/api/new";
+import { listCurrent, listPage, listProgress, modulesResults } from "@/api/new";
 import router from "@/router";
 import { useRouter } from "vue-router";
+const activeName = ref("仿岩质潮间带");
+
 const routerUse = useRouter();
 
 const { VITE_API_PATH } = import.meta.env;
@@ -210,6 +223,33 @@ async function showNews() {
 //   return dataList.data.filter((news) => news.type=== newType);
 // };
 
+const mdlData = ref();
+const modulesData = async () => {
+  const res = await modulesResults();
+  console.log(res.data);
+
+  let arrObj = [];
+  for (const key in res.data) {
+    const i = { module: key, children: res.data[key] };
+    arrObj.push(i);
+  }
+  arrObj = arrObj.map(item => {
+    item.children = item.children?.map(item => {
+      item.achievementMaterialUrlArr = item.achievementMaterialUrl?.split("?");
+      return {
+        ...item,
+        achievementMaterialUrlArr: item.achievementMaterialUrlArr
+      };
+    });
+    return {
+      ...item
+    };
+  });
+  console.log(arrObj);
+  mdlData.value = arrObj;
+  // console.log(mdlData.value);
+};
+
 async function showPage() {
   loading.value = true;
   const { rows } = await listPage();
@@ -262,6 +302,7 @@ onMounted(async () => {
   await showPage();
   await showProgress();
   scroll();
+  modulesData();
 });
 </script>
 
