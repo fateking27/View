@@ -31,11 +31,25 @@
                     <h4>&nbsp; 门户及项目介绍：</h4>
                     <div>
                       &nbsp; &nbsp; &nbsp;
-                      <router-link to="/detail/1">项目来源</router-link>
-                      &nbsp; &nbsp;
-                      <router-link to="/meaning/1">建设意义</router-link>&nbsp;
-                      &nbsp; &nbsp;
-                      <router-link to="/expectation/1">预期成果</router-link
+                      <router-link
+                        v-for="(item, index) of source"
+                        :key="index"
+                        :to="{ name: 'Detail', params: { id: item.id } }"
+                        >项目来源</router-link
+                      >
+                      &nbsp;
+                      <router-link
+                        v-for="(item, index) of meaning"
+                        :key="index"
+                        :to="{ name: 'Detail', params: { id: item.id } }"
+                        >建设意义</router-link
+                      >
+                      <router-link
+                        v-for="(item, index) of expectation"
+                        :key="index"
+                        :to="{ name: 'Detail', params: { id: item.id } }"
+                        class="ml-10"
+                        >预期成果</router-link
                       >&nbsp; &nbsp;
                     </div>
                   </div>
@@ -76,8 +90,37 @@
 //   router.push({ name: "Detail", params: { id: item.id } });
 // }
 
+import { onMounted, reactive, ref } from "vue";
+import { listIntroduce } from "@/api/new";
+
 defineOptions({
   name: "siteMap"
+});
+
+const dataList = reactive({
+  data: []
+});
+
+const form = reactive({
+  releaseStatus: "1"
+});
+const meaning = ref([]);
+const expectation = ref([]);
+const source = ref([]);
+
+async function showNews() {
+  const { rows } = await listIntroduce(form);
+  dataList.data = rows;
+  meaning.value = classifyNews("建设意义");
+  expectation.value = classifyNews("预期成果");
+  source.value = classifyNews("项目来源");
+}
+const classifyNews = newType => {
+  return dataList.data.filter(news => news.type === newType);
+};
+
+onMounted(async () => {
+  await showNews();
 });
 
 // const newsData = reactive({

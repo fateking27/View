@@ -17,7 +17,13 @@
       placeholder="请输入要搜索的内容"
       v-model="keyWord.key"
     />
-    <el-button @click="handleClick(keyWord)"> 搜索 </el-button>
+    <el-button
+      type="primary"
+      @click="handleClick(keyWord)"
+      :icon="useRenderIcon(Search)"
+    >
+      搜索
+    </el-button>
     <!--    <el-button class="login-register" type="primary" round plain @click="login"-->
     <!--      >登录 / 注册</el-button-->
     <!--    >-->
@@ -36,6 +42,8 @@
 <script lang="ts" setup>
 import { ref, watch, computed, reactive } from "vue";
 import { useRoute } from "vue-router";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import Search from "@iconify-icons/ep/search";
 import { ElHeader, ElMenu, ElMenuItem, ElInput } from "element-plus";
 import router from "@/router";
 
@@ -81,7 +89,7 @@ const keyWord = reactive({
 });
 
 function handleClick(keyWord) {
-  router.push({ name: "Search", params: { keyWord: keyWord.key } });
+  router.push({ name: "Search", params: { keyWord: keyWord.key || null } });
 }
 </script>
 
