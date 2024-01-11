@@ -27,6 +27,7 @@
               v-for="(item, index) of progressList.data"
               :key="index"
               :src="item.coverMaterialUrl"
+              @click="Click(item)"
             />
           </el-aside>
           <el-main class="ml-10 no-padding">
@@ -303,6 +304,9 @@ async function showProgress() {
 
 function handleClick(item) {
   router.push({ name: "Page", params: { id: item.id } });
+}
+function Click(item) {
+  router.push({ name: "Fix", params: { id: item.id } });
 }
 
 const scroll = () => {

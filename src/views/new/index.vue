@@ -184,6 +184,9 @@
             <router-link to="/progress" style="position: absolute"
               >进展成效</router-link
             >
+            <router-link to="/progress" class="float-right text-base"
+              >更多>></router-link
+            >
           </div>
         </div>
         <el-container>
@@ -223,13 +226,17 @@
             </ul>
           </el-main>
           <el-aside width="450px">
-            <el-carousel width="450px" height="250px">
+            <el-carousel width="450px" height="300px">
               <el-carousel-item
                 v-for="(item, index) of progressNews.slice(0, 4)"
                 :key="index"
                 @click="handleClick(item)"
               >
-                <el-image class="cursor-pointer" :src="item.coverMaterialUrl" />
+                <el-image
+                  class="cursor-pointer"
+                  style="width: 450px; height: 250px"
+                  :src="item.coverMaterialUrl"
+                />
                 <div class="flex justify-center">
                   <text style="font-size: 12px; text-align: center">{{
                     item.name
