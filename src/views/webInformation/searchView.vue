@@ -25,8 +25,12 @@
     >
       <div v-show="dataList.data.length > 0">
         <div v-for="(item, index) of dataList.data" :key="index">
-          <h3>{{ item.title }}</h3>
+          <router-link :to="'/searchPage?' + item.title"
+            ><h3>{{ item.title }}</h3></router-link
+          >
+
           <div v-html="getContent(item.content)" class="mt-4" />
+
           <el-text class="flex justify-start" style="margin-top: 20px"
             >发布时间{{ item.releaseTime }}</el-text
           >
@@ -80,5 +84,6 @@ onMounted(async () => {
   console.log(keyWord.key);
   const { rows } = await onSearch(keyWord);
   dataList.data = rows;
+  localStorage.setItem("searchData", JSON.stringify(rows));
 });
 </script>
