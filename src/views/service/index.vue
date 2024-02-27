@@ -37,7 +37,15 @@
                 <!-- Indianapolis -->
                 {{ item.title }}
               </td>
-              <td class="border">
+              <td
+                class="border"
+                style="
+                  max-width: 400px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                "
+              >
                 <!-- Indiana -->
                 <el-link
                   :href="item.content"

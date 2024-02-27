@@ -32,7 +32,15 @@
               <td class="border">
                 {{ item.title }}
               </td>
-              <td class="border">
+              <td
+                class="border"
+                style="
+                  max-width: 400px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                "
+              >
                 <el-link
                   :href="item.content"
                   target="_blank"
@@ -80,6 +88,7 @@ onMounted(() => {
 table {
   width: 100%;
   min-width: 1000px; /* 设置最小宽度 */
+  table-layout: fixed;
   border-collapse: collapse;
 }
 
